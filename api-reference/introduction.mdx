@@ -1,33 +1,48 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: "Introduction"
+description: "Welcome to the Passport API"
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+Welcome to the Passport API! This API allows you to programmatically create, manage, and distribute digital wallet passes for Apple Wallet and Google Pay.
 
-## Welcome
+## What you can do
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+With the Passport API, you can:
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+- **Retrieve wallet passes** - Search for or get details of wallet passes that you've created
+- **Create notifications** - Send push notifications to users' devices
+- **Search notifications** - Get details for specific notifications or search for wallet pass notifications
+
+## Getting started
+
+To get started with the API:
+
+1. **Get your API key** - Create an API key from your Unblocked dashboard
+2. **Make your first request** - Try out the API endpoints in the interactive playground
+3. **Explore the documentation** - Learn about different pass types and advanced features
+
+## Base URL
+
+All API requests should be made to:
+
+```
+https://wallet-pass-api-staging.nftco.com/v1
+```
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+All requests require authentication using an API key in the Authorization header:
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+```bash
+Authorization: Bearer ub_live_your_api_key_here
 ```
+
+Learn more about [API keys](/api-reference/api-keys) and how to create them.
+
+## Rate limits
+
+API requests are rate limited to ensure fair usage and system stability. If you exceed the rate limit, you'll receive a `429 Too Many Requests` response.
+
+## Support
+
+Need help? Reach out to our support team or check out our comprehensive documentation for guides and examples.

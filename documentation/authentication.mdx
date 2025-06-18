@@ -1,0 +1,134 @@
+---
+title: "Authentication"
+description: "Learn how to authenticate with the Unblocked Wallet Passes API"
+---
+
+All API requests require authentication using an API key from your Unblocked Brands dashboard
+
+## Getting Your API Key
+
+### Step 1: Access API Settings
+
+1. **Log into [Unblocked Brands](https://app.unblockedbrands.com/login)**
+2. **Navigate to Settings → API tab**
+
+<img
+  src="/images/auth/api-key-settings.png"
+  alt="Settings page with API tab highlighted"
+/>
+
+### Step 2: Create and Copy Your Key
+
+1. **Click "Create API Key"** and give it a descriptive name
+2. **Copy the generated key immediately** - it's only shown once
+
+<img
+  src="/images/auth/api-key-settings-created.png"
+  alt="Generated API key with copy button highlighted"
+/>
+
+<Warning>
+Your API key grants full access to your Unblocked account. Keep it secure and never share it publicly. You won't be able to see the key again after this step.
+</Warning>
+
+## Using Your API Key
+
+Include your API key in the `Authorization` header with the `Bearer` prefix:
+
+```bash
+curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
+  -H 'Authorization: Bearer YOUR_API_KEY_HERE'
+```
+
+### Example with a Real Request
+
+```bash
+curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
+  -H 'Authorization: Bearer ub_live_abc123xyz456...' \
+  -H 'Content-Type: application/json'
+```
+
+## Authentication Errors
+
+If your API key is missing, invalid, or malformed, you'll receive authentication errors:
+
+### Missing API Key (401 Unauthorized)
+```json
+{
+  "txId": "req-123",
+  "timestamp": "2025-01-17T10:30:00Z",
+  "errorCode": "UNAUTHORIZED", 
+  "errorMessage": "Missing Authorization header"
+}
+```
+
+### Invalid API Key (403 Forbidden)
+```json
+{
+  "txId": "req-456",
+  "timestamp": "2025-01-17T10:30:00Z",
+  "errorCode": "FORBIDDEN",
+  "errorMessage": "Invalid API key"
+}
+```
+
+## Best Practices
+
+### Secure Storage
+- **Use environment variables** in production applications
+- **Never commit API keys** to version control (Git, etc.)
+- **Use different keys** for development and production
+- **Rotate keys regularly** for security
+
+### Environment Setup Examples
+
+**For Node.js applications:**
+```bash
+# .env file
+UNBLOCKED_API_KEY=ub_live_your_api_key_here
+```
+
+```javascript
+// app.js
+const API_KEY = process.env.UNBLOCKED_API_KEY;
+
+const response = await fetch('https://wallet-pass-api-staging.nftco.com/v1/wallet-pass', {
+  headers: {
+    'Authorization': `Bearer ${API_KEY}`,
+    'Content-Type': 'application/json'
+  }
+});
+```
+
+**For Python applications:**
+```bash
+# .env file  
+UNBLOCKED_API_KEY=ub_live_your_api_key_here
+```
+
+```python
+import os
+import requests
+
+API_KEY = os.getenv('UNBLOCKED_API_KEY')
+
+response = requests.get(
+    'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass',
+    headers={
+        'Authorization': f'Bearer {API_KEY}',
+        'Content-Type': 'application/json'
+    }
+)
+```
+
+### Rate Limiting
+- **API requests are rate limited** to prevent abuse
+- **Include proper error handling** for `429 Too Many Requests` responses  
+- **Implement exponential backoff** for retries when rate limited
+- **Cache responses** when possible to reduce API calls
+
+### Key Management
+- **Create separate keys** for different applications or environments
+- **Use descriptive names** when creating keys (e.g., "Mobile App - Production")
+- **Delete unused keys** to minimize security risks
+- **Monitor key usage** in your dashboard analytics

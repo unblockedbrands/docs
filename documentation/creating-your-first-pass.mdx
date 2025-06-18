@@ -1,0 +1,154 @@
+---
+title: "Creating Your First Pass"
+description: "Step-by-step guide to creating and publishing your first wallet pass"
+---
+
+# Creating Your First Pass
+
+A complete walkthrough of creating, customizing, and publishing your first wallet pass
+
+## What You'll Build
+
+By the end of this guide, you'll have created a fully functional wallet pass that users can add to their Apple Wallet or Google Pay.
+
+## Step-by-Step Process
+
+### 1. Prepare Your Assets
+
+Before creating a pass, gather these required images:
+
+- **Logo** (160x50px) - Displayed at the top of the pass
+- **Icon** (29x29px) - Small icon for notifications  
+- **Strip** (375x123px) - Background image for the pass
+- **Footer** (295x15px) - Optional footer image
+
+<Tip>
+Images should be in PNG format with transparent backgrounds where appropriate.
+</Tip>
+
+### 2. Upload Your Images
+
+Upload each image and save the upload keys:
+
+```bash
+# Upload logo
+curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/uploads' \
+  -H 'Authorization: Bearer <your-token>' \
+  -F 'file=@logo.png'
+
+# Upload icon  
+curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/uploads' \
+  -H 'Authorization: Bearer <your-token>' \
+  -F 'file=@icon.png'
+
+# Upload strip
+curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/uploads' \
+  -H 'Authorization: Bearer <your-token>' \
+  -F 'file=@strip.png'
+```
+
+### 3. Create Your Pass
+
+Now create the pass with your branding and content:
+
+```bash
+curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
+  -H 'Authorization: Bearer <your-token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "passName": "Loyalty Card",
+    "passMetadata": {
+      "description": "Your membership card for exclusive benefits",
+      "organizationName": "Your Business Name",
+      "backgroundColor": "#000000",
+      "displayTextColor": "#ffffff",
+      "topField": {
+        "key": "member",
+        "label": "Member ID",
+        "value": "12345"
+      },
+      "secondaryFields": [
+        {
+          "key": "name",
+          "label": "Name", 
+          "value": "John Doe"
+        },
+        {
+          "key": "tier",
+          "label": "Tier",
+          "value": "Gold"
+        }
+      ]
+    },
+    "uploadInfoList": [
+      {"fileName": "logo.png", "uploadKey": "your-logo-key"},
+      {"fileName": "icon.png", "uploadKey": "your-icon-key"},
+      {"fileName": "strip.png", "uploadKey": "your-strip-key"}
+    ],
+    "status": "Published"
+  }'
+```
+
+### 4. Test Your Pass
+
+The API returns a `passLink` that you can use to test:
+
+```json
+{
+  "id": "pass-abc123",
+  "passName": "Loyalty Card", 
+  "passLink": "https://passes.unblocked.com/pass-abc123",
+  "status": "Published"
+}
+```
+
+Open the `passLink` on your phone to add the pass to your wallet!
+
+## Customization Options
+
+### Colors and Branding
+- Use your brand colors for `backgroundColor` and `displayTextColor`
+- Ensure sufficient contrast for readability
+- Test on both light and dark device themes
+
+### Fields and Content
+- **Top Field** - Most prominent information (member ID, balance, etc.)
+- **Secondary Fields** - Additional details in smaller text
+- **Back Fields** - Detailed information on the back of the pass
+
+### QR Codes
+Add QR codes for easy scanning:
+
+```json
+"passMetadata": {
+  "qrUrl": "https://yoursite.com/redeem/12345",
+  "qrText": "Scan to redeem points"
+}
+```
+
+## Common Issues
+
+<AccordionGroup>
+  <Accordion title="Pass not appearing in wallet">
+    - Check that `status` is set to "Published"
+    - Verify all required images are uploaded
+    - Ensure `passLink` is opened on a mobile device
+  </Accordion>
+  
+  <Accordion title="Images not displaying">
+    - Confirm image files are in PNG format
+    - Check image dimensions match requirements
+    - Verify upload keys are correct
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Add Notifications" href="/documentation/managing-notifications">
+    Send push notifications to pass holders
+  </Card>
+  <Card title="Location Triggers" href="/documentation/working-with-locations">
+    Show passes based on user location
+  </Card>
+</CardGroup>

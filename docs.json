@@ -11,69 +11,58 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "API Reference",
+        "openapi": "api-reference/openapi.json",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "Getting Started",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Essentials",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              {
+                "page": "api-reference/introduction",
+                "icon": "book-open"
+              },
+              {
+                "page": "api-reference/api-keys",
+                "icon": "key"
+              }
             ]
           }
         ]
       },
       {
-        "tab": "API Reference",
+        "tab": "Documentation",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Basics",
             "pages": [
-              "api-reference/introduction"
+              "documentation/getting-started",
+              "documentation/authentication",
+              "documentation/creating-your-first-pass",
+              "documentation/understanding-pass-types"
             ]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "Guides",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "documentation/creating-apple-passes",
+              "documentation/creating-google-passes",
+              "documentation/managing-notifications",
+              "documentation/working-with-locations",
+              "documentation/file-uploads"
+            ]
+          },
+          {
+            "group": "Advanced",
+            "pages": [
+              "documentation/pass-customization",
+              "documentation/bulk-operations",
+              "documentation/webhooks",
+              "documentation/analytics"
             ]
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/light.svg",

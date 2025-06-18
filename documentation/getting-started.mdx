@@ -1,0 +1,121 @@
+---
+title: "Getting Started"
+description: "Learn how to create your first wallet pass using the Unblocked Wallet Passes API"
+---
+
+# Getting Started
+
+Create your first Apple and Google wallet pass using the Unblocked Wallet Passes API
+
+## Prerequisites
+
+- An Unblocked account
+- An API key
+- Basic understanding of REST APIs
+
+## Your First Wallet Pass
+
+To create a wallet pass, you'll need to follow these steps:
+
+1. **Upload your pass assets** (logo, icon, strip images)
+2. **Create the wallet pass** with metadata
+3. **Publish the pass** to make it available for download
+
+### Step 1: Upload Pass Assets
+
+First, upload the required images for your pass:
+
+```bash
+curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/uploads' \
+  -H 'Authorization: Bearer <your-token>' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'file=@logo.png'
+```
+
+**Response:**
+```json
+{
+  "msg": "upload-key-abc123"
+}
+```
+
+<Note>
+You'll need to upload at least three images: logo.png, icon.png, and strip.png. Footer.png is optional.
+</Note>
+
+### Step 2: Create the Wallet Pass
+
+Now create your wallet pass using the upload keys:
+
+```bash
+curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
+  -H 'Authorization: Bearer <your-token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "passName": "My First Pass",
+    "passMetadata": {
+      "description": "Welcome to our loyalty program",
+      "organizationName": "Your Company",
+      "backgroundColor": "#1a1a1a",
+      "displayTextColor": "#ffffff",
+      "topField": {
+        "key": "member",
+        "label": "Member",
+        "value": "Gold Status"
+      }
+    },
+    "uploadInfoList": [
+      {
+        "fileName": "logo.png",
+        "uploadKey": "upload-key-abc123"
+      },
+      {
+        "fileName": "icon.png", 
+        "uploadKey": "upload-key-def456"
+      },
+      {
+        "fileName": "strip.png",
+        "uploadKey": "upload-key-ghi789"
+      }
+    ],
+    "status": "Published"
+  }'
+```
+
+**Response:**
+```json
+{
+  "id": "pass-123",
+  "passName": "My First Pass",
+  "passLink": "https://passes.example.com/download/pass-123",
+  "status": "Published",
+  "createdAt": "2025-01-17T10:30:00Z"
+}
+```
+
+### Step 3: Share Your Pass
+
+Your wallet pass is now ready! Users can:
+
+- **Add to Apple Wallet** by opening the `passLink` on iOS
+- **Add to Google Wallet** by opening the `passLink` on Android  
+- **Download the pass file** for manual installation
+
+## What's Next?
+
+Now that you've created your first pass, explore these guides:
+
+<CardGroup cols={2}>
+  <Card title="Managing Notifications" href="/documentation/managing-notifications">
+    Send push notifications to passes
+  </Card>
+  <Card title="Working with Locations" href="/documentation/working-with-locations">
+    Add location-based triggers
+  </Card>
+  <Card title="Pass Customization" href="/documentation/pass-customization">
+    Advanced styling and branding
+  </Card>
+  <Card title="Analytics" href="/documentation/analytics">
+    Track pass performance
+  </Card>
+</CardGroup> 
