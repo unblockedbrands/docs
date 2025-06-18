@@ -1,0 +1,94 @@
+---
+title: "Fetching pass details"
+description: "Learn how to retrieve pass information and search your wallet passes"
+---
+
+Retrieve information about your wallet passes and search through your pass collection
+
+## Prerequisites
+
+- An Unblocked account
+- An API key
+- At least one created wallet pass
+
+## Get pass details by ID
+
+Retrieve detailed information about a specific pass:
+
+```bash
+curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}' \
+  -H 'Authorization: Bearer <your-token>'
+```
+
+**Response:**
+```json
+{
+  "id": "pass-123",
+  "passName": "My Wallet Pass",
+  "status": "Published",
+  "passType": "generic",
+  "passLink": "https://passes.example.com/download/pass-123",
+  "passMetadata": {
+    "description": "Welcome to our program",
+    "organizationName": "Your Company",
+    "backgroundColor": "#1a1a1a",
+    "displayTextColor": "#ffffff"
+  },
+  "createdAt": "2025-01-17T10:30:00Z",
+  "updatedAt": "2025-01-17T10:30:00Z"
+}
+```
+
+## List all passes
+
+Search and retrieve all your created passes:
+
+```bash
+curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
+  -H 'Authorization: Bearer <your-token>'
+```
+
+**Response:**
+```json
+{
+  "passes": [
+    {
+      "id": "pass-123",
+      "passName": "My Wallet Pass",
+      "status": "Published",
+      "createdAt": "2025-01-17T10:30:00Z"
+    },
+    {
+      "id": "pass-456", 
+      "passName": "Another Pass",
+      "status": "Draft",
+      "createdAt": "2025-01-16T15:20:00Z"
+    }
+  ],
+  "total": 2
+}
+```
+
+## Search passes by name
+
+Filter passes by name or partial match:
+
+```bash
+curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass?search=loyalty' \
+  -H 'Authorization: Bearer <your-token>'
+```
+
+## Understanding pass status
+
+Your passes can have the following statuses:
+
+- **Published** - Pass is live and can be downloaded by users
+- **Draft** - Pass is saved but not yet published
+- **Archived** - Pass is no longer active but preserved for records
+
+## What's Next?
+
+Now that you can fetch pass details, learn how to:
+
+- [Creating push notifications](/documentation/creating-push-notifications)
+- [Fetching push notification details](/documentation/fetching-push-notification-details) 

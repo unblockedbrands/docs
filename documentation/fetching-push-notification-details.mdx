@@ -1,0 +1,115 @@
+---
+title: "Fetching push notification details"
+description: "Learn how to retrieve information about sent and scheduled push notifications"
+---
+
+Retrieve information about your push notifications and track their delivery status
+
+## Prerequisites
+
+- An Unblocked account
+- An API key
+- At least one sent or scheduled notification
+
+## Get notification details by ID
+
+Retrieve detailed information about a specific notification:
+
+```bash
+curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/notifications/{notificationId}' \
+  -H 'Authorization: Bearer <your-token>'
+```
+
+**Response:**
+```json
+{
+  "id": "notif-789",
+  "passId": "pass-123",
+  "message": "Your loyalty points have been updated!",
+  "type": "immediate",
+  "status": "sent",
+  "sentAt": "2025-01-17T14:30:00Z",
+  "recipientCount": 145,
+  "deliveryStats": {
+    "delivered": 142,
+    "failed": 3,
+    "pending": 0
+  }
+}
+```
+
+## List all notifications for a pass
+
+Get all notifications sent to a specific pass:
+
+```bash
+curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}/notifications' \
+  -H 'Authorization: Bearer <your-token>'
+```
+
+**Response:**
+```json
+{
+  "notifications": [
+    {
+      "id": "notif-789",
+      "message": "Your loyalty points have been updated!",
+      "type": "immediate",
+      "status": "sent",
+      "sentAt": "2025-01-17T14:30:00Z",
+      "recipientCount": 145
+    },
+    {
+      "id": "notif-790",
+      "message": "Special offer expires tomorrow!", 
+      "type": "scheduled",
+      "status": "scheduled",
+      "scheduledFor": "2025-01-18T09:00:00Z",
+      "estimatedRecipients": 145
+    }
+  ],
+  "total": 2
+}
+```
+
+## List all notifications
+
+Get all notifications across all your passes:
+
+```bash
+curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/notifications' \
+  -H 'Authorization: Bearer <your-token>'
+```
+
+## Filter notifications by status
+
+Retrieve notifications by their current status:
+
+```bash
+curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/notifications?status=scheduled' \
+  -H 'Authorization: Bearer <your-token>'
+```
+
+## Understanding notification status
+
+Your notifications can have the following statuses:
+
+- **sent** - Notification has been delivered to devices
+- **scheduled** - Notification is queued for future delivery
+- **failed** - Notification delivery failed (check error details)
+- **cancelled** - Scheduled notification was cancelled before sending
+
+## Delivery statistics
+
+For sent notifications, you can track:
+
+- **delivered** - Successfully delivered to devices
+- **failed** - Failed to deliver (device offline, etc.)
+- **pending** - Still being delivered (for large recipient lists)
+
+## What's Next?
+
+Now that you can track notifications, learn how to:
+
+- [Sending location-based notifications](/documentation/sending-location-based-notifications)
+- [Creating wallet passes](/documentation/creating-wallet-passes) 

@@ -1,0 +1,160 @@
+---
+title: "Creating wallet passes"
+description: "Learn how to create wallet passes for both Apple Wallet and Google Wallet"
+---
+
+Create wallet passes that work seamlessly on both Apple Wallet and Google Wallet
+
+## Prerequisites
+
+- An Unblocked account
+- An API key
+- Pass assets (logo, icon, strip images)
+- Basic understanding of REST APIs
+
+## Upload pass assets
+
+First, upload the required images for your pass:
+
+```bash
+curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/uploads' \
+  -H 'Authorization: Bearer <your-token>' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'file=@logo.png'
+```
+
+**Response:**
+```json
+{
+  "msg": "upload-key-abc123"
+}
+```
+
+<Note>
+Upload these required images: logo.png, icon.png, and strip.png. Footer.png is optional.
+</Note>
+
+## Create wallet pass
+
+Create a pass that works on both Apple and Google wallets:
+
+```bash
+curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
+  -H 'Authorization: Bearer <your-token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "passName": "My Wallet Pass",
+    "passMetadata": {
+      "description": "Welcome to our program",
+      "organizationName": "Your Company",
+      "backgroundColor": "#1a1a1a",
+      "displayTextColor": "#ffffff",
+      "topField": {
+        "key": "member",
+        "label": "Member",
+        "value": "Gold Status"
+      },
+      "secondaryFields": [
+        {
+          "key": "points",
+          "label": "Points",
+          "value": "2,500"
+        }
+      ]
+    },
+    "uploadInfoList": [
+      {
+        "fileName": "logo.png",
+        "uploadKey": "upload-key-abc123"
+      },
+      {
+        "fileName": "icon.png", 
+        "uploadKey": "upload-key-def456"
+      },
+      {
+        "fileName": "strip.png",
+        "uploadKey": "upload-key-ghi789"
+      }
+    ],
+    "status": "Published"
+  }'
+```
+
+**Response:**
+```json
+{
+  "id": "pass-123",
+  "passName": "My Wallet Pass",
+  "passLink": "https://passes.example.com/download/pass-123",
+  "status": "Published",
+  "createdAt": "2025-01-17T10:30:00Z"
+}
+```
+
+## How passes appear
+
+Your pass will automatically adapt to each platform:
+
+**Apple Wallet (iOS):**
+- Clean, minimal design following Apple's guidelines
+- Shows organization name, logo, and key fields
+- Supports lock screen notifications
+
+**Google Wallet (Android):**
+- Material Design styling with your brand colors
+- Displays all fields with clear hierarchy
+- Integrates with Google services
+
+## Pass distribution
+
+Share your pass with users:
+
+- **Direct link** - Send the `passLink` via email or SMS
+- **QR code** - Generate QR codes linking to your pass
+- **Website integration** - Add download buttons to your site
+
+When users tap the link:
+- **iOS devices** - Opens directly in Apple Wallet
+- **Android devices** - Opens in Google Wallet
+- **Desktop** - Shows download instructions
+
+## Pass fields structure
+
+Configure your pass fields for optimal display:
+
+```json
+{
+  "topField": {
+    "key": "status",
+    "label": "Status", 
+    "value": "VIP Member"
+  },
+  "secondaryFields": [
+    {
+      "key": "points",
+      "label": "Points",
+      "value": "2,500"
+    },
+    {
+      "key": "tier",
+      "label": "Tier",
+      "value": "Gold"
+    }
+  ],
+  "auxiliaryFields": [
+    {
+      "key": "member_since",
+      "label": "Member Since",
+      "value": "Jan 2024"
+    }
+  ]
+}
+```
+
+## What's Next?
+
+Now that you've created a pass, learn how to:
+
+- [Creating push notifications](/documentation/creating-push-notifications)
+- [Sending location-based notifications](/documentation/sending-location-based-notifications)
+- [File uploads](/documentation/file-uploads) 

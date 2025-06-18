@@ -1,0 +1,146 @@
+---
+title: "Sending location-based notifications"
+description: "Learn how to send push notifications triggered by user location"
+---
+
+Send automatic push notifications when users enter or exit specific geographic areas
+
+## Prerequisites
+
+- An Unblocked account
+- An API key
+- A published wallet pass
+- Location coordinates (latitude/longitude)
+
+## Add location to pass
+
+Configure a geographic area that will trigger notifications:
+
+```bash
+curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}/locations' \
+  -H 'Authorization: Bearer <your-token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "latitude": 37.7749,
+    "longitude": -122.4194,
+    "radius": 100,
+    "message": "Welcome to our store! Show this pass for 10% off.",
+    "relevantText": "You're near our location"
+  }'
+```
+
+**Response:**
+```json
+{
+  "id": "location-456",
+  "passId": "pass-123",
+  "latitude": 37.7749,
+  "longitude": -122.4194,
+  "radius": 100,
+  "message": "Welcome to our store! Show this pass for 10% off.",
+  "relevantText": "You're near our location",
+  "active": true,
+  "createdAt": "2025-01-17T15:00:00Z"
+}
+```
+
+## Toggle location trigger
+
+Enable or disable location-based notifications:
+
+```bash
+curl -X PATCH 'https://wallet-pass-api-staging.nftco.com/v1/locations/{locationId}' \
+  -H 'Authorization: Bearer <your-token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "active": false
+  }'
+```
+
+**Response:**
+```json
+{
+  "id": "location-456",
+  "active": false,
+  "updatedAt": "2025-01-17T16:00:00Z"
+}
+```
+
+## List pass locations
+
+Get all configured locations for a pass:
+
+```bash
+curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}/locations' \
+  -H 'Authorization: Bearer <your-token>'
+```
+
+**Response:**
+```json
+{
+  "locations": [
+    {
+      "id": "location-456",
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "radius": 100,
+      "message": "Welcome to our store!",
+      "active": true
+    },
+    {
+      "id": "location-457", 
+      "latitude": 37.7849,
+      "longitude": -122.4094,
+      "radius": 150,
+      "message": "Visit our second location!",
+      "active": false
+    }
+  ],
+  "total": 2
+}
+```
+
+## How location notifications work
+
+When users approach your configured locations:
+
+**Automatic triggering:**
+- Device detects user entering the geographic area
+- Push notification sent immediately  
+- Pass appears on lock screen (iOS) or as notification (Android)
+
+**User experience:**
+- Notification shows your custom message
+- Tapping opens the pass in their wallet
+- "Relevant Text" appears on the pass when nearby
+
+## Location configuration
+
+**Radius guidelines:**
+- **Small venues** (shops): 50-100 meters
+- **Large venues** (malls): 200-500 meters  
+- **Events/stadiums**: 500-1000 meters
+- **Maximum**: 1000 meters (iOS limitation)
+
+**Message best practices:**
+- Include specific action: "Show pass for discount"
+- Add urgency: "Limited time offer"
+- Keep under 160 characters
+- Mention location: "Welcome to Downtown Store"
+
+## Remove location
+
+Delete a location trigger from a pass:
+
+```bash
+curl -X DELETE 'https://wallet-pass-api-staging.nftco.com/v1/locations/{locationId}' \
+  -H 'Authorization: Bearer <your-token>'
+```
+
+## What's Next?
+
+Now that you can send location-based notifications, learn how to:
+
+- [Creating push notifications](/documentation/creating-push-notifications)
+- [Fetching push notification details](/documentation/fetching-push-notification-details)
+- [File uploads](/documentation/file-uploads) 

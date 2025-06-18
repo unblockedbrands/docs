@@ -1,11 +1,11 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Passport API Documentation",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#367CFF",
+    "light": "#367CFF",
+    "dark": "#367CFF"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -23,38 +23,36 @@
           }
         ]
       },
-      {
-        "tab": "Documentation",
-        "groups": [
-          {
-            "group": "Basics",
-            "pages": [
-              "documentation/getting-started",
-              "documentation/creating-your-first-pass",
-              "documentation/understanding-pass-types"
-            ]
-          },
-          {
-            "group": "Guides",
-            "pages": [
-              "documentation/creating-apple-passes",
-              "documentation/creating-google-passes",
-              "documentation/managing-notifications",
-              "documentation/working-with-locations",
-              "documentation/file-uploads"
-            ]
-          },
-          {
-            "group": "Advanced",
-            "pages": [
-              "documentation/pass-customization",
-              "documentation/bulk-operations",
-              "documentation/webhooks",
-              "documentation/analytics"
-            ]
-          }
-        ]
-      }
+              {
+          "tab": "Documentation",
+          "groups": [
+            {
+              "group": "Basics",
+              "pages": [
+                "documentation/fetching-pass-details",
+                "documentation/creating-push-notifications",
+                "documentation/fetching-push-notification-details"
+              ]
+            },
+            {
+              "group": "Guides",
+              "pages": [
+                "documentation/creating-wallet-passes",
+                "documentation/sending-location-based-notifications",
+                "documentation/file-uploads"
+              ]
+            },
+            {
+              "group": "Advanced",
+              "pages": [
+                "documentation/pass-customization",
+                "documentation/bulk-operations",
+                "documentation/webhooks",
+                "documentation/analytics"
+              ]
+            }
+          ]
+        }
     ]
   },
   "logo": {

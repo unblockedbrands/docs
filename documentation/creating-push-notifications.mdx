@@ -1,0 +1,95 @@
+---
+title: "Creating push notifications"
+description: "Learn how to send immediate push notifications to wallet passes"
+---
+
+Send immediate push notifications to users with wallet passes on their devices
+
+## Prerequisites
+
+- An Unblocked account
+- An API key
+- A published wallet pass with at least one user download
+
+## Send immediate notification
+
+Send a push notification right away to pass holders:
+
+```bash
+curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}/notifications' \
+  -H 'Authorization: Bearer <your-token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "message": "Your loyalty points have been updated!",
+    "type": "immediate"
+  }'
+```
+
+**Response:**
+```json
+{
+  "id": "notif-789",
+  "passId": "pass-123", 
+  "message": "Your loyalty points have been updated!",
+  "type": "immediate",
+  "status": "sent",
+  "sentAt": "2025-01-17T14:30:00Z",
+  "recipientCount": 145
+}
+```
+
+## Schedule notification
+
+Schedule a notification to be sent at a specific time:
+
+```bash
+curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}/notifications' \
+  -H 'Authorization: Bearer <your-token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "message": "Special offer expires tomorrow!",
+    "type": "scheduled",
+    "scheduledFor": "2025-01-18T09:00:00Z"
+  }'
+```
+
+**Response:**
+```json
+{
+  "id": "notif-790",
+  "passId": "pass-123",
+  "message": "Special offer expires tomorrow!",
+  "type": "scheduled", 
+  "status": "scheduled",
+  "scheduledFor": "2025-01-18T09:00:00Z",
+  "estimatedRecipients": 145
+}
+```
+
+## How notifications appear
+
+When users receive your push notification:
+
+**On iOS (Apple Wallet):**
+- Notification appears on lock screen and notification center
+- Shows your organization name and message
+- Tapping opens the pass in Apple Wallet
+
+**On Android (Google Wallet):**
+- Notification appears in notification panel
+- Shows pass name and your message
+- Tapping opens the pass in Google Wallet
+
+## Notification message guidelines
+
+- **Keep it short** - Maximum 160 characters for best display
+- **Be specific** - "Points updated: 250 pts" vs "Update available"
+- **Add urgency** - "Expires tomorrow" or "Limited time"
+- **Avoid spam** - Don't send too frequently to the same users
+
+## What's Next?
+
+Now that you can send notifications, learn how to:
+
+- [Fetching push notification details](/documentation/fetching-push-notification-details)
+- [Sending location-based notifications](/documentation/sending-location-based-notifications) 
