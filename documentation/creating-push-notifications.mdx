@@ -16,12 +16,13 @@ Send immediate push notifications to users with wallet passes on their devices
 Send a push notification right away to pass holders:
 
 ```bash
-curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}/notifications' \
-  -H 'Authorization: Bearer <your-token>' \
+curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/notifications' \
+  -H 'api-key: <your-api-key>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "message": "Your loyalty points have been updated!",
-    "type": "immediate"
+    "notificationName": "Loyalty Points Update",
+    "passSerialNumber": "pass-123",
+    "notificationMessage": "Your loyalty points have been updated!"
   }'
 ```
 
@@ -29,12 +30,12 @@ curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}/
 ```json
 {
   "id": "notif-789",
-  "passId": "pass-123", 
-  "message": "Your loyalty points have been updated!",
-  "type": "immediate",
-  "status": "sent",
-  "sentAt": "2025-01-17T14:30:00Z",
-  "recipientCount": 145
+  "notificationName": "Loyalty Points Update",
+  "passSerialNumber": "pass-123",
+  "notificationMessage": "Your loyalty points have been updated!",
+  "status": "Published",
+  "publishedTime": "2025-01-17T14:30:00Z",
+  "totalNotificationSentCount": 145
 }
 ```
 
@@ -43,13 +44,15 @@ curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}/
 Schedule a notification to be sent at a specific time:
 
 ```bash
-curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}/notifications' \
-  -H 'Authorization: Bearer <your-token>' \
+curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/notifications' \
+  -H 'api-key: <your-api-key>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "message": "Special offer expires tomorrow!",
-    "type": "scheduled",
-    "scheduledFor": "2025-01-18T09:00:00Z"
+    "notificationName": "Special Offer Expiry",
+    "passSerialNumber": "pass-123",
+    "notificationMessage": "Special offer expires tomorrow!",
+    "scheduledTime": "2025-01-18T09:00:00Z",
+    "status": "Scheduled"
   }'
 ```
 
@@ -57,12 +60,12 @@ curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}/
 ```json
 {
   "id": "notif-790",
-  "passId": "pass-123",
-  "message": "Special offer expires tomorrow!",
-  "type": "scheduled", 
-  "status": "scheduled",
-  "scheduledFor": "2025-01-18T09:00:00Z",
-  "estimatedRecipients": 145
+  "notificationName": "Special Offer Expiry",
+  "passSerialNumber": "pass-123",
+  "notificationMessage": "Special offer expires tomorrow!",
+  "status": "Scheduled",
+  "scheduledTime": "2025-01-18T09:00:00Z",
+  "createdTime": "2025-01-17T14:30:00Z"
 }
 ```
 

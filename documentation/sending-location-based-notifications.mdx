@@ -17,15 +17,16 @@ Send automatic push notifications when users enter or exit specific geographic a
 Configure a geographic area that will trigger notifications:
 
 ```bash
-curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}/locations' \
-  -H 'Authorization: Bearer <your-token>' \
+curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass-location' \
+  -H 'api-key: <your-api-key>' \
   -H 'Content-Type: application/json' \
   -d '{
+    "name": "Main Store Location",
     "latitude": 37.7749,
     "longitude": -122.4194,
-    "radius": 100,
-    "message": "Welcome to our store! Show this pass for 10% off.",
-    "relevantText": "You're near our location"
+    "relevantText": "Welcome to our store! Show this pass for 10% off.",
+    "enabled": true,
+    "passSerialNumber": "{passId}"
   }'
 ```
 
@@ -33,14 +34,13 @@ curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}/
 ```json
 {
   "id": "location-456",
-  "passId": "pass-123",
+  "name": "Main Store Location",
   "latitude": 37.7749,
   "longitude": -122.4194,
-  "radius": 100,
-  "message": "Welcome to our store! Show this pass for 10% off.",
-  "relevantText": "You're near our location",
-  "active": true,
-  "createdAt": "2025-01-17T15:00:00Z"
+  "relevantText": "Welcome to our store! Show this pass for 10% off.",
+  "enabled": true,
+  "createdTime": "2025-01-17T15:00:00Z",
+  "workspaceId": "workspace-123"
 }
 ```
 
@@ -49,11 +49,11 @@ curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}/
 Enable or disable location-based notifications:
 
 ```bash
-curl -X PATCH 'https://wallet-pass-api-staging.nftco.com/v1/locations/{locationId}' \
-  -H 'Authorization: Bearer <your-token>' \
+curl -X PUT 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass-location/{locationId}' \
+  -H 'api-key: <your-api-key>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "active": false
+    "enabled": false
   }'
 ```
 
@@ -61,8 +61,9 @@ curl -X PATCH 'https://wallet-pass-api-staging.nftco.com/v1/locations/{locationI
 ```json
 {
   "id": "location-456",
-  "active": false,
-  "updatedAt": "2025-01-17T16:00:00Z"
+  "name": "Main Store Location",
+  "enabled": false,
+  "updatedTime": "2025-01-17T16:00:00Z"
 }
 ```
 
@@ -71,32 +72,33 @@ curl -X PATCH 'https://wallet-pass-api-staging.nftco.com/v1/locations/{locationI
 Get all configured locations for a pass:
 
 ```bash
-curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}/locations' \
-  -H 'Authorization: Bearer <your-token>'
+curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass-location?passSerialNumbers={passId}' \
+  -H 'api-key: <your-api-key>'
 ```
 
 **Response:**
 ```json
 {
-  "locations": [
+  "items": [
     {
       "id": "location-456",
+      "name": "Main Store",
       "latitude": 37.7749,
       "longitude": -122.4194,
-      "radius": 100,
-      "message": "Welcome to our store!",
-      "active": true
+      "relevantText": "Welcome to our store!",
+      "enabled": true
     },
     {
       "id": "location-457", 
+      "name": "Second Store",
       "latitude": 37.7849,
       "longitude": -122.4094,
-      "radius": 150,
-      "message": "Visit our second location!",
-      "active": false
+      "relevantText": "Visit our second location!",
+      "enabled": false
     }
   ],
-  "total": 2
+  "cursor": null,
+  "hasMore": false
 }
 ```
 
@@ -133,8 +135,8 @@ When users approach your configured locations:
 Delete a location trigger from a pass:
 
 ```bash
-curl -X DELETE 'https://wallet-pass-api-staging.nftco.com/v1/locations/{locationId}' \
-  -H 'Authorization: Bearer <your-token>'
+curl -X DELETE 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass-location/{locationId}' \
+  -H 'api-key: <your-api-key>'
 ```
 
 ## What's Next?

@@ -16,8 +16,8 @@ Retrieve information about your push notifications and track their delivery stat
 Retrieve detailed information about a specific notification:
 
 ```bash
-curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/notifications/{notificationId}' \
-  -H 'Authorization: Bearer <your-token>'
+curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/notifications/{notificationId}' \
+  -H 'api-key: <your-api-key>'
 ```
 
 **Response:**
@@ -43,8 +43,8 @@ curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/notifications/{notific
 Get all notifications sent to a specific pass:
 
 ```bash
-curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}/notifications' \
-  -H 'Authorization: Bearer <your-token>'
+curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/notifications?passSerialNumber={passId}' \
+  -H 'api-key: <your-api-key>'
 ```
 
 **Response:**
@@ -77,8 +77,8 @@ curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}/n
 Get all notifications across all your passes:
 
 ```bash
-curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/notifications' \
-  -H 'Authorization: Bearer <your-token>'
+curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/notifications' \
+  -H 'api-key: <your-api-key>'
 ```
 
 ## Filter notifications by status
@@ -86,8 +86,8 @@ curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/notifications' \
 Retrieve notifications by their current status:
 
 ```bash
-curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/notifications?status=scheduled' \
-  -H 'Authorization: Bearer <your-token>'
+curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/notifications?status=scheduled' \
+  -H 'api-key: <your-api-key>'
 ```
 
 ## Understanding notification status

@@ -19,7 +19,7 @@ Send a notification to all users who have a specific pass:
 
 ```bash
 curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/notifications' \
-  -H 'Authorization: Bearer <your-token>' \
+  -H 'api-key: <your-api-key>' \
   -H 'Content-Type: application/json' \
   -d '{
     "passSerialNumber": "pass-123",
@@ -45,7 +45,7 @@ Schedule a notification to be sent at a specific time:
 
 ```bash
 curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/notifications' \
-  -H 'Authorization: Bearer <your-token>' \
+  -H 'api-key: <your-api-key>' \
   -H 'Content-Type: application/json' \
   -d '{
     "passSerialNumber": "pass-123",
@@ -102,7 +102,7 @@ Monitor notification performance using the stats endpoint:
 
 ```bash
 curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/notifications/notification-456/stats' \
-  -H 'Authorization: Bearer <your-token>'
+  -H 'api-key: <your-api-key>'
 ```
 
 **Response:**

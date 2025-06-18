@@ -17,7 +17,7 @@ Retrieve detailed information about a specific pass:
 
 ```bash
 curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}' \
-  -H 'Authorization: Bearer <your-token>'
+  -H 'api-key: <your-api-key>'
 ```
 
 **Response:**
@@ -34,8 +34,8 @@ curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}' 
     "backgroundColor": "#1a1a1a",
     "displayTextColor": "#ffffff"
   },
-  "createdAt": "2025-01-17T10:30:00Z",
-  "updatedAt": "2025-01-17T10:30:00Z"
+  "createdTime": "2025-01-17T10:30:00Z",
+  "updatedTime": "2025-01-17T10:30:00Z"
 }
 ```
 
@@ -45,27 +45,28 @@ Search and retrieve all your created passes:
 
 ```bash
 curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
-  -H 'Authorization: Bearer <your-token>'
+  -H 'api-key: <your-api-key>'
 ```
 
 **Response:**
 ```json
 {
-  "passes": [
+  "items": [
     {
       "id": "pass-123",
       "passName": "My Wallet Pass",
       "status": "Published",
-      "createdAt": "2025-01-17T10:30:00Z"
+      "createdTime": "2025-01-17T10:30:00Z"
     },
     {
       "id": "pass-456", 
       "passName": "Another Pass",
       "status": "Draft",
-      "createdAt": "2025-01-16T15:20:00Z"
+      "createdTime": "2025-01-16T15:20:00Z"
     }
   ],
-  "total": 2
+  "cursor": null,
+  "hasMore": false
 }
 ```
 
@@ -74,8 +75,8 @@ curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
 Filter passes by name or partial match:
 
 ```bash
-curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass?search=loyalty' \
-  -H 'Authorization: Bearer <your-token>'
+curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass?query=loyalty' \
+  -H 'api-key: <your-api-key>'
 ```
 
 ## Understanding pass status

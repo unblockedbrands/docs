@@ -1,0 +1,167 @@
+{
+  "timestamp": "20250618_211431",
+  "description": "Backup of hidden upload endpoints from OpenAPI specification",
+  "hidden_endpoints": {
+    "/uploads": {
+      "post": {
+        "tags": [
+          "Uploading files"
+        ],
+        "summary": "Upload a file to the server",
+        "description": "Upload a file to the server by providing the file data as a form-data parameter",
+        "operationId": "uploadFile",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "File to upload",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "File uploaded successfully, key returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uploads/s3": {
+      "post": {
+        "tags": [
+          "Uploading files"
+        ],
+        "summary": "Upload a file to S3",
+        "description": "Upload a file to S3 by providing the file data as a form-data parameter and the bucket name",
+        "operationId": "uploadFileToS3",
+        "parameters": [
+          {
+            "name": "bucket",
+            "in": "query",
+            "description": "Bucket name to upload the file to",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "File to upload",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "File uploaded successfully, path returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uploads/finalize/s3-copy": {
+      "post": {
+        "tags": [
+          "Uploading files"
+        ],
+        "summary": "Finalize the S3 copy operation",
+        "description": "Finalize the S3 copy operation using the key and extension of the object",
+        "operationId": "finalizeCloudCopy",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "query",
+            "description": "Key of the object",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "extn",
+            "in": "query",
+            "description": "Extension of the object",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "S3 object finalized successfully, URL returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uploads/s3-url": {
+      "get": {
+        "tags": [
+          "Uploading files"
+        ],
+        "summary": "Get a pre-signed URL to upload a file to S3",
+        "description": "Get a pre-signed URL to upload a file to S3",
+        "operationId": "getPresignedUrlToUpload",
+        "responses": {
+          "200": {
+            "description": "Pre-signed URL generated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignedURLResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tag_info": {
+    "name": "Uploading files",
+    "description": "APIs to upload files to the server"
+  }
+}

@@ -27,7 +27,7 @@ First, upload the required images for your pass:
 
 ```bash
 curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/uploads' \
-  -H 'Authorization: Bearer <your-token>' \
+  -H 'api-key: <your-api-key>' \
   -H 'Content-Type: multipart/form-data' \
   -F 'file=@logo.png'
 ```
@@ -35,7 +35,8 @@ curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/uploads' \
 **Response:**
 ```json
 {
-  "msg": "upload-key-abc123"
+  "key": "upload-key-abc123",
+  "url": "https://s3.amazonaws.com/bucket/upload-key-abc123"
 }
 ```
 
@@ -49,7 +50,7 @@ Now create your wallet pass using the upload keys:
 
 ```bash
 curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
-  -H 'Authorization: Bearer <your-token>' \
+  -H 'api-key: <your-api-key>' \
   -H 'Content-Type: application/json' \
   -d '{
     "passName": "My First Pass",
@@ -89,7 +90,7 @@ curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
   "passName": "My First Pass",
   "passLink": "https://passes.example.com/download/pass-123",
   "status": "Published",
-  "createdAt": "2025-01-17T10:30:00Z"
+  "createdTime": "2025-01-17T10:30:00Z"
 }
 ```
 

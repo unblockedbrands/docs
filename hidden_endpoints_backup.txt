@@ -1,0 +1,228 @@
+
+HIDDEN ENDPOINTS - TO RESTORE, ADD THESE BACK TO THE PATHS SECTION:
+
+
+Path: /wallet-pass
+Method: POST
+Summary: Create a wallet pass
+Full JSON:
+{
+  "post": {
+    "tags": [
+      "Passes"
+    ],
+    "summary": "Create a wallet pass",
+    "description": "This operation is used to create both Apple and Google wallet passes.\n",
+    "operationId": "createWalletPass",
+    "requestBody": {
+      "description": "Request body for generating an Apple pass",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/WalletPassInfo"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "201": {
+        "description": "Pass has been created successfully",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WalletPassInfo"
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Invalid input",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UnblockedApiError"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+--------------------------------------------------
+
+Path: /wallet-pass/{id}
+Method: DELETE
+Summary: Delete wallet pass
+Full JSON:
+{
+  "delete": {
+    "tags": [
+      "Passes"
+    ],
+    "summary": "Delete wallet pass",
+    "description": "Delete wallet pass by id.\n",
+    "operationId": "deletePass",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "wallet pass id",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "404": {
+        "description": "Pass id is not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UnblockedApiError"
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Invalid input",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UnblockedApiError"
+            }
+          }
+        }
+      },
+      "204": {
+        "description": "Success"
+      }
+    }
+  }
+}
+--------------------------------------------------
+
+Path: /wallet-pass/notifications/{id}
+Method: DELETE
+Summary: Delete wallet pass notification
+Full JSON:
+{
+  "delete": {
+    "tags": [
+      "Notifications"
+    ],
+    "summary": "Delete wallet pass notification",
+    "description": "Delete wallet pass notification by id\n",
+    "operationId": "deletePassNotification",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "notification Id",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "404": {
+        "description": "Notification Id is not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UnblockedApiError"
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Invalid input",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UnblockedApiError"
+            }
+          }
+        }
+      },
+      "204": {
+        "description": "Success"
+      }
+    }
+  }
+}
+--------------------------------------------------
+
+Path: /wallet-pass/notifications/{id}/stats
+Method: GET
+Summary: Get Link Notification Stats
+Full JSON:
+{
+  "get": {
+    "tags": [
+      "Notifications"
+    ],
+    "summary": "Get Link Notification Stats",
+    "description": "Retrieve statistics for a specific wallet pass notification.\n ",
+    "operationId": "getPassNotificationStats",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "notification Id",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "cursor",
+        "in": "query",
+        "description": "last notification stat link id record",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "default": 0
+        }
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "description": "The size of the page to be returned",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "default": 20
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Notification stat record has been retrieved successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/NotificationStats"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+--------------------------------------------------
+
+## Upload Endpoints (Hidden on 20250618_211431)
+Tag: Uploading files
+Reason: Hidden per user request
+Endpoints:
+- /uploads
+- /uploads/s3
+- /uploads/finalize/s3-copy
+- /uploads/s3-url
+Full backup file: upload_endpoints_backup_20250618_211431.json
+

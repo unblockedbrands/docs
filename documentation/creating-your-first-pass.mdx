@@ -33,17 +33,17 @@ Upload each image and save the upload keys:
 ```bash
 # Upload logo
 curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/uploads' \
-  -H 'Authorization: Bearer <your-token>' \
+  -H 'api-key: <your-api-key>' \
   -F 'file=@logo.png'
 
 # Upload icon  
 curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/uploads' \
-  -H 'Authorization: Bearer <your-token>' \
+  -H 'api-key: <your-api-key>' \
   -F 'file=@icon.png'
 
 # Upload strip
 curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/uploads' \
-  -H 'Authorization: Bearer <your-token>' \
+  -H 'api-key: <your-api-key>' \
   -F 'file=@strip.png'
 ```
 
@@ -53,7 +53,7 @@ Now create the pass with your branding and content:
 
 ```bash
 curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
-  -H 'Authorization: Bearer <your-token>' \
+  -H 'api-key: <your-api-key>' \
   -H 'Content-Type: application/json' \
   -d '{
     "passName": "Loyalty Card",
