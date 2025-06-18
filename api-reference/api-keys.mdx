@@ -1,11 +1,12 @@
 ---
 title: "API keys"
-description: "Learn how API keys work on Unblocked Wallet Passes"
+description: "Learn how API keys work with the Passport API"
+icon: "key"
 ---
 
-API keys on Unblocked allow you to access your account programmatically. This is useful for integrating Unblocked into your application or with other tools and services.
+API keys allow you to access your Passport account programmatically and integrate wallet passes into your applications.
 
-For now, each API key is tied to a specific user - meaning that it will inherit the permissions of the user, also when they change. With the key you will be able to access all of the user's resources.
+Each API key inherits the permissions of the user who created it, giving access to all of that user's resources.
 
 ## Creating an API key
 
@@ -22,9 +23,7 @@ You can create an API key by following these steps:
   </Step>
   
   <Step title="Create an API key">
-    Click on the "Create API key" button.
-
-    Currently, you can only create an API key in the context of your own user. While we might add fine-grained permissions in the future, it's not an option right now.
+    Click **"Create API key"** and give it a descriptive name.
 
     <img
       src="/images/auth/api-key-create.png"
@@ -41,7 +40,7 @@ You can create an API key by following these steps:
     />
 
     <Warning>
-      Your API key grants full access to your Unblocked account. Keep it secure and never share it publicly.
+      Your API key grants full access to your Passport account. Keep it secure and never share it publicly.
     </Warning>
   </Step>
   
@@ -122,10 +121,10 @@ If your API key is missing, invalid, or malformed, you'll receive authentication
 <CodeGroup>
 ```javascript Node.js
 // .env file
-UNBLOCKED_API_KEY=ub_live_your_api_key_here
+PASSPORT_API_KEY=ub_live_your_api_key_here
 
 // app.js
-const API_KEY = process.env.UNBLOCKED_API_KEY;
+const API_KEY = process.env.PASSPORT_API_KEY;
 
 const response = await fetch('https://wallet-pass-api-staging.nftco.com/v1/wallet-pass', {
   headers: {
@@ -137,12 +136,12 @@ const response = await fetch('https://wallet-pass-api-staging.nftco.com/v1/walle
 
 ```python Python
 # .env file  
-UNBLOCKED_API_KEY=ub_live_your_api_key_here
+PASSPORT_API_KEY=ub_live_your_api_key_here
 
 import os
 import requests
 
-API_KEY = os.getenv('UNBLOCKED_API_KEY')
+API_KEY = os.getenv('PASSPORT_API_KEY')
 
 response = requests.get(
     'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass',

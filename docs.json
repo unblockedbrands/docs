@@ -2,7 +2,6 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "Mint Starter Kit",
-  "openapi": "https://wallet-pass-api-staging.nftco.com/v1/v3/api-docs/unblocked-passes-api",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
@@ -18,14 +17,8 @@
           {
             "group": "Getting Started",
             "pages": [
-              {
-                "page": "api-reference/introduction",
-                "icon": "book-open"
-              },
-              {
-                "page": "api-reference/api-keys",
-                "icon": "key"
-              }
+              "api-reference/introduction",
+              "api-reference/api-keys"
             ]
           }
         ]
@@ -37,7 +30,6 @@
             "group": "Basics",
             "pages": [
               "documentation/getting-started",
-              "documentation/authentication",
               "documentation/creating-your-first-pass",
               "documentation/understanding-pass-types"
             ]
