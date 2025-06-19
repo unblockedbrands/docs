@@ -1,0 +1,58 @@
+HIDDEN DOCUMENTATION TAB BACKUP
+================================
+Date: 2025-01-22
+File: docs.json
+Location: Inside "tabs" array after "API Reference" tab
+Reason: Temporarily hide entire Documentation tab from navigation
+
+HIDDEN DOCUMENTATION TAB JSON:
+==============================
+
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Basics",
+            "pages": [
+              "documentation/fetching-pass-details",
+              "documentation/creating-push-notifications",
+              "documentation/fetching-push-notification-details"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "documentation/creating-wallet-passes",
+              "documentation/sending-location-based-notifications",
+              "documentation/file-uploads"
+            ]
+          },
+          {
+            "group": "Advanced",
+            "pages": [
+              "documentation/pass-customization",
+              "documentation/bulk-operations",
+              "documentation/webhooks",
+              "documentation/analytics"
+            ]
+          }
+        ]
+      }
+
+RESTORE INSTRUCTIONS:
+====================
+1. Open docs.json file
+2. Find the "tabs" array inside "navigation"
+3. Add the JSON block above after the "API Reference" tab (before the closing bracket of the tabs array)
+4. Make sure to add a comma after the API Reference tab if it doesn't have one
+5. The Documentation tab will reappear in the navigation
+
+QUICK RESTORE COMMAND:
+=====================
+To quickly restore, you can run this command from the project root:
+# This will restore the Documentation tab by replacing the docs.json file
+
+CURRENT STATE:
+=============
+Documentation tab is HIDDEN from navigation
+Only "API Reference" tab is visible 

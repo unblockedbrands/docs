@@ -76,25 +76,31 @@ If your API key is missing, invalid, or malformed, you'll receive authentication
 
 <AccordionGroup>
   <Accordion title="Missing API Key (401 Unauthorized)">
+    When no API key is provided in the request headers, you'll receive a 401 Unauthorized response indicating that authentication is required.
+    
     ```json
     {
-      "txId": "req-123",
+      "txId": "req-xxx",
       "timestamp": "2025-01-17T10:30:00Z",
       "errorCode": "UNAUTHORIZED", 
-      "errorMessage": "Missing api-key header"
+      "errorMessage": "Authentication required"
     }
     ```
+    <Note>The exact error message may vary depending on the endpoint.</Note>
   </Accordion>
 
   <Accordion title="Invalid API Key (403 Forbidden)">
+    When an invalid or malformed API key is provided, you'll receive a 403 Forbidden response indicating that access is denied.
+    
     ```json
     {
-      "txId": "req-456",
+      "txId": "req-xxx",
       "timestamp": "2025-01-17T10:30:00Z",
       "errorCode": "FORBIDDEN",
-      "errorMessage": "Invalid API key"
+      "errorMessage": "Access denied"
     }
     ```
+    <Note>The exact error message may vary depending on the endpoint.</Note>
   </Accordion>
 </AccordionGroup>
 

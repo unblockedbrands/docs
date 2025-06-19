@@ -22,37 +22,7 @@
             ]
           }
         ]
-      },
-              {
-          "tab": "Documentation",
-          "groups": [
-            {
-              "group": "Basics",
-              "pages": [
-                "documentation/fetching-pass-details",
-                "documentation/creating-push-notifications",
-                "documentation/fetching-push-notification-details"
-              ]
-            },
-            {
-              "group": "Guides",
-              "pages": [
-                "documentation/creating-wallet-passes",
-                "documentation/sending-location-based-notifications",
-                "documentation/file-uploads"
-              ]
-            },
-            {
-              "group": "Advanced",
-              "pages": [
-                "documentation/pass-customization",
-                "documentation/bulk-operations",
-                "documentation/webhooks",
-                "documentation/analytics"
-              ]
-            }
-          ]
-        }
+      }
     ]
   },
   "logo": {

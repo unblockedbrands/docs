@@ -788,33 +788,6 @@
         ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
-          },
-          "createdTime": {
-            "type": "string",
-            "description": "The time when the entity was created in ISO 8601 format including milliseconds and timezone offset.",
-            "format": "date-time",
-            "example": "2025-05-13T15:07:15.036Z"
-          },
-          "updatedTime": {
-            "type": "string",
-            "description": "The time when the entity was last updated in ISO 8601 format including milliseconds and timezone offset.",
-            "format": "date-time",
-            "example": "2025-05-13T15:07:15.036Z"
-          },
-          "createdBy": {
-            "type": "string",
-            "description": "The user who created the entity."
-          },
-          "updatedBy": {
-            "type": "string",
-            "description": "The user who last updated the entity."
-          },
-          "workspaceId": {
-            "type": "string",
-            "description": "The ID of the workspace to which this entity belongs."
-          },
           "name": {
             "maxLength": 255,
             "minLength": 0,
@@ -838,12 +811,6 @@
             "description": "Longitude of the location in degrees. This field is required.",
             "format": "double",
             "example": -122.4194
-          },
-          "altitude": {
-            "type": "number",
-            "description": "Altitude of the location in meters. Optional.",
-            "format": "double",
-            "example": 10.5
           },
           "relevantText": {
             "maxLength": 255,
@@ -1030,13 +997,6 @@
           "qrText": {
             "type": "string",
             "description": "QR text. It appears below the QR code."
-          },
-          "locations": {
-            "type": "array",
-            "description": "Locations. Apple: Defines geographic locations where the Pass is relevant. The Pass can appear on the lock screen when the user is near one of these locations. Google: Not supported.",
-            "items": {
-              "$ref": "#/components/schemas/PassLocation"
-            }
           }
         },
         "description": "Pass metadata."
@@ -1067,33 +1027,7 @@
         ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
-          },
-          "createdTime": {
-            "type": "string",
-            "description": "The time when the entity was created in ISO 8601 format including milliseconds and timezone offset.",
-            "format": "date-time",
-            "example": "2025-05-13T15:07:15.036Z"
-          },
-          "updatedTime": {
-            "type": "string",
-            "description": "The time when the entity was last updated in ISO 8601 format including milliseconds and timezone offset.",
-            "format": "date-time",
-            "example": "2025-05-13T15:07:15.036Z"
-          },
-          "createdBy": {
-            "type": "string",
-            "description": "The user who created the entity."
-          },
-          "updatedBy": {
-            "type": "string",
-            "description": "The user who last updated the entity."
-          },
-          "workspaceId": {
-            "type": "string",
-            "description": "Workspace the Pass belongs to. "
-          },
+
           "passName": {
             "type": "string",
             "description": "Name of the Pass, the name has to be unique within the workspace.",
@@ -1101,71 +1035,10 @@
           },
           "passMetadata": {
             "$ref": "#/components/schemas/PassMetadata"
-          },
-          "uploadInfoList": {
-            "type": "array",
-            "description": "Pass images. each Pass has to have a logo, icon, and strip images in png format. footer.png is optional.",
-            "items": {
-              "$ref": "#/components/schemas/UploadInfo"
-            }
-          },
-          "passLink": {
-            "type": "string",
-            "description": "The link where passes can be downloaded. This link will be generated after passes are created."
-          },
+                      },
           "notificationHeader": {
             "type": "string",
             "description": "This is used for Apple passes. The notification header is displayed on the lock screen when a notification is sent to the Pass."
-          },
-          "account": {
-            "$ref": "#/components/schemas/Account"
-          },
-          "appleIssuedCount": {
-            "type": "integer",
-            "description": "Total number of users who have added this Pass to their Apple Wallets",
-            "format": "int32"
-          },
-          "googleIssuedCount": {
-            "type": "integer",
-            "description": "Total number of users who have added this Pass to their Google Wallets",
-            "format": "int32"
-          },
-          "totalIssuedCount": {
-            "type": "integer",
-            "description": "Total number of users who have added this Pass to their wallets (Apple + Google)",
-            "format": "int32"
-          },
-          "appleActiveCount": {
-            "type": "integer",
-            "description": "Total number of users who have added this Pass to their Apple Wallets and have not removed it",
-            "format": "int32"
-          },
-          "googleActiveCount": {
-            "type": "integer",
-            "description": "Total number of users who have added this Pass to their Google Wallets and have not removed it",
-            "format": "int32"
-          },
-          "totalActiveCount": {
-            "type": "integer",
-            "description": "Total number of users who have added this Pass to their wallets (Apple + Google) and have not removed it",
-            "format": "int32"
-          },
-          "passLinkSlug": {
-            "type": "string",
-            "description": "Slug to be used for the Pass link. This is used to generate the Pass link, if not provided the system will generate a random slug."
-          },
-          "googlePassLink": {
-            "type": "string",
-            "description": "Raw link to Google Pass. This link is provided by Google API."
-          },
-          "status": {
-            "type": "string",
-            "description": "Pass status",
-            "example": "Draft, Published",
-            "enum": [
-              "Draft",
-              "Published"
-            ]
           }
         }
       },
@@ -1236,33 +1109,6 @@
         ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
-          },
-          "createdTime": {
-            "type": "string",
-            "description": "The time when the entity was created in ISO 8601 format including milliseconds and timezone offset.",
-            "format": "date-time",
-            "example": "2025-05-13T15:07:15.036Z"
-          },
-          "updatedTime": {
-            "type": "string",
-            "description": "The time when the entity was last updated in ISO 8601 format including milliseconds and timezone offset.",
-            "format": "date-time",
-            "example": "2025-05-13T15:07:15.036Z"
-          },
-          "createdBy": {
-            "type": "string",
-            "description": "The user who created the entity."
-          },
-          "updatedBy": {
-            "type": "string",
-            "description": "The user who last updated the entity."
-          },
-          "workspaceId": {
-            "type": "string",
-            "description": "workspace id to which the notification belongs."
-          },
           "passSerialNumber": {
             "type": "string",
             "description": "Pass id to which the notification belongs."
@@ -1277,46 +1123,16 @@
           },
           "status": {
             "type": "string",
-            "description": "Notification status: Draft: Notification will not be sent until the status is changed to Scheduled or ProcessingScheduled: Notification is scheduled to be sent at a specific time. Processing: Notification is being sent. Published: Notification has been sent.Failed: Notification failed to be sent. If the status is not specified at the time of creation, it will be sent immediately.",
+            "description": "Notification status: Draft: Notification will not be sent until the status is changed to Scheduled. Scheduled: Notification is scheduled to be sent at a specific time.",
             "enum": [
               "Draft",
-              "Initializing",
-              "Processing",
-              "Finalizing",
-              "Published",
-              "Scheduled",
-              "AppleFailedGoogleSuccess",
-              "AppleSuccessGoogleFailed",
-              "Failed"
+              "Scheduled"
             ]
-          },
-          "publishedTime": {
-            "type": "string",
-            "description": "Time when the notification was sent in ISO 8601 format including milliseconds and timezone offset.",
-            "format": "date-time"
           },
           "scheduledTime": {
             "type": "string",
-            "description": "Time when the notification will be sent in ISO 8601 format including milliseconds and timezone offset.",
+            "description": "Time when the notification will be sent in ISO 8601 format including milliseconds and timezone offset. Notifications are processed and sent in batches every 15 minutes (at :00, :15, :30, and :45 minutes past each hour). Scheduled times that fall between these intervals will be automatically queued for the next available batch.",
             "format": "date-time"
-          },
-          "appleNotificationSentCount": {
-            "type": "integer",
-            "description": "Number of active users who have received this notification on their Apple Wallets.",
-            "format": "int32"
-          },
-          "googleNotificationSentCount": {
-            "type": "integer",
-            "description": "Number of active users who have received this notification on their Google Wallets.",
-            "format": "int32"
-          },
-          "totalNotificationSentCount": {
-            "type": "integer",
-            "description": "Total number of active users who have received this notification on their wallets (Apple + Google).",
-            "format": "int32"
-          },
-          "notificationStats": {
-            "$ref": "#/components/schemas/NotificationStats"
           }
         }
       },

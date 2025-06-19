@@ -1,0 +1,437 @@
+HIDDEN FIELDS BACKUP - WalletPassInfo Schema
+=====================================================
+Date: 2025-01-22
+Endpoint: PATCH /wallet-pass/{id} (and all other endpoints using WalletPassInfo schema)
+Schema: WalletPassInfo
+Reason: Hide internal/system fields and simplify API documentation
+
+HIDDEN FIELDS TO RESTORE:
+--------------------------
+
+Field: id
+Location: After "properties": {
+JSON:
+          "id": {
+            "type": "string"
+          },
+
+Field: createdTime  
+Location: After "id" field
+JSON:
+          "createdTime": {
+            "type": "string",
+            "description": "The time when the entity was created in ISO 8601 format including milliseconds and timezone offset.",
+            "format": "date-time",
+            "example": "2025-05-13T15:07:15.036Z"
+          },
+
+Field: updatedTime
+Location: After "createdTime" field  
+JSON:
+          "updatedTime": {
+            "type": "string",
+            "description": "The time when the entity was last updated in ISO 8601 format including milliseconds and timezone offset.",
+            "format": "date-time",
+            "example": "2025-05-13T15:07:15.036Z"
+          },
+
+Field: createdBy
+Location: After "updatedTime" field
+JSON:
+          "createdBy": {
+            "type": "string",
+            "description": "The user who created the entity."
+          },
+
+Field: updatedBy
+Location: After "createdBy" field
+JSON:
+          "updatedBy": {
+            "type": "string",
+            "description": "The user who last updated the entity."
+          },
+
+Field: workspaceId
+Location: After "updatedBy" field
+JSON:
+          "workspaceId": {
+            "type": "string",
+            "description": "Workspace the Pass belongs to. "
+          },
+
+Field: uploadInfoList
+Location: After "passMetadata" field
+JSON:
+          "uploadInfoList": {
+            "type": "array",
+            "description": "Pass images. each Pass has to have a logo, icon, and strip images in png format. footer.png is optional.",
+            "items": {
+              "$ref": "#/components/schemas/UploadInfo"
+            }
+          },
+
+Field: passLink
+Location: After "uploadInfoList" field
+JSON:
+          "passLink": {
+            "type": "string",
+            "description": "The link where passes can be downloaded. This link will be generated after passes are created."
+          },
+
+Field: account
+Location: After "notificationHeader" field
+JSON:
+          "account": {
+            "$ref": "#/components/schemas/Account"
+          },
+
+Field: appleIssuedCount
+Location: After "account" field
+JSON:
+          "appleIssuedCount": {
+            "type": "integer",
+            "description": "Total number of users who have added this Pass to their Apple Wallets",
+            "format": "int32"
+          },
+
+Field: googleIssuedCount
+Location: After "appleIssuedCount" field
+JSON:
+          "googleIssuedCount": {
+            "type": "integer",
+            "description": "Total number of users who have added this Pass to their Google Wallets",
+            "format": "int32"
+          },
+
+Field: totalIssuedCount
+Location: After "googleIssuedCount" field
+JSON:
+          "totalIssuedCount": {
+            "type": "integer",
+            "description": "Total number of users who have added this Pass to their wallets (Apple + Google)",
+            "format": "int32"
+          },
+
+Field: appleActiveCount
+Location: After "totalIssuedCount" field
+JSON:
+          "appleActiveCount": {
+            "type": "integer",
+            "description": "Total number of users who have added this Pass to their Apple Wallets and have not removed it",
+            "format": "int32"
+          },
+
+Field: googleActiveCount
+Location: After "appleActiveCount" field
+JSON:
+          "googleActiveCount": {
+            "type": "integer",
+            "description": "Total number of users who have added this Pass to their Google Wallets and have not removed it",
+            "format": "int32"
+          },
+
+Field: totalActiveCount
+Location: After "googleActiveCount" field
+JSON:
+          "totalActiveCount": {
+            "type": "integer",
+            "description": "Total number of users who have added this Pass to their wallets (Apple + Google) and have not removed it",
+            "format": "int32"
+          },
+
+Field: passLinkSlug
+Location: After "totalActiveCount" field
+JSON:
+          "passLinkSlug": {
+            "type": "string",
+            "description": "Slug to be used for the Pass link. This is used to generate the Pass link, if not provided the system will generate a random slug."
+          },
+
+Field: googlePassLink
+Location: After "passLinkSlug" field
+JSON:
+          "googlePassLink": {
+            "type": "string",
+            "description": "Raw link to Google Pass. This link is provided by Google API."
+          },
+
+Field: status
+Location: After "googlePassLink" field (before closing "}" of properties)
+JSON:
+          "status": {
+            "type": "string",
+            "description": "Pass status",
+            "example": "Draft, Published",
+            "enum": [
+              "Draft",
+              "Published"
+            ]
+          }
+
+PASSMETADATA SCHEMA HIDDEN FIELDS:
+===================================
+
+Field: locations
+Schema: PassMetadata (referenced by WalletPassInfo.passMetadata)
+Location: After "qrText" field (before closing "}" of properties)
+JSON:
+          "locations": {
+            "type": "array",
+            "description": "Locations. Apple: Defines geographic locations where the Pass is relevant. The Pass can appear on the lock screen when the user is near one of these locations. Google: Not supported.",
+            "items": {
+              "$ref": "#/components/schemas/PassLocation"
+            }
+          }
+
+PASSNOTIFICATION SCHEMA HIDDEN FIELDS:
+=======================================
+
+Field: id
+Schema: PassNotification (used by POST /wallet-pass/notifications)
+Location: After "properties": {
+JSON:
+          "id": {
+            "type": "string"
+          },
+
+Field: createdTime
+Schema: PassNotification
+Location: After "id" field
+JSON:
+          "createdTime": {
+            "type": "string",
+            "description": "The time when the entity was created in ISO 8601 format including milliseconds and timezone offset.",
+            "format": "date-time",
+            "example": "2025-05-13T15:07:15.036Z"
+          },
+
+Field: updatedTime
+Schema: PassNotification
+Location: After "createdTime" field
+JSON:
+          "updatedTime": {
+            "type": "string",
+            "description": "The time when the entity was last updated in ISO 8601 format including milliseconds and timezone offset.",
+            "format": "date-time",
+            "example": "2025-05-13T15:07:15.036Z"
+          },
+
+Field: createdBy
+Schema: PassNotification
+Location: After "updatedTime" field
+JSON:
+          "createdBy": {
+            "type": "string",
+            "description": "The user who created the entity."
+          },
+
+Field: updatedBy
+Schema: PassNotification
+Location: After "createdBy" field
+JSON:
+          "updatedBy": {
+            "type": "string",
+            "description": "The user who last updated the entity."
+          },
+
+Field: workspaceId
+Schema: PassNotification
+Location: After "updatedBy" field
+JSON:
+          "workspaceId": {
+            "type": "string",
+            "description": "workspace id to which the notification belongs."
+          },
+
+Field: publishedTime
+Schema: PassNotification
+Location: After "scheduledTime" field
+JSON:
+          "publishedTime": {
+            "type": "string",
+            "description": "Time when the notification was sent in ISO 8601 format including milliseconds and timezone offset.",
+            "format": "date-time"
+          },
+
+Field: appleNotificationSentCount
+Schema: PassNotification
+Location: After "publishedTime" field
+JSON:
+          "appleNotificationSentCount": {
+            "type": "integer",
+            "description": "Number of active users who have received this notification on their Apple Wallets.",
+            "format": "int32"
+          },
+
+Field: googleNotificationSentCount
+Schema: PassNotification
+Location: After "appleNotificationSentCount" field
+JSON:
+          "googleNotificationSentCount": {
+            "type": "integer",
+            "description": "Number of active users who have received this notification on their Google Wallets.",
+            "format": "int32"
+          },
+
+Field: totalNotificationSentCount
+Schema: PassNotification
+Location: After "googleNotificationSentCount" field
+JSON:
+          "totalNotificationSentCount": {
+            "type": "integer",
+            "description": "Total number of active users who have received this notification on their wallets (Apple + Google).",
+            "format": "int32"
+          },
+
+Field: notificationStats
+Schema: PassNotification
+Location: After "totalNotificationSentCount" field
+JSON:
+          "notificationStats": {
+            "$ref": "#/components/schemas/NotificationStats"
+          }
+
+PASSLOCATION SCHEMA HIDDEN FIELDS:
+===================================
+
+Field: id
+Schema: PassLocation (used by POST /wallet-pass-location and PUT /wallet-pass-location/{locationId})
+Location: After "properties": {
+JSON:
+          "id": {
+            "type": "string"
+          },
+
+Field: createdTime
+Schema: PassLocation
+Location: After "id" field
+JSON:
+          "createdTime": {
+            "type": "string",
+            "description": "The time when the entity was created in ISO 8601 format including milliseconds and timezone offset.",
+            "format": "date-time",
+            "example": "2025-05-13T15:07:15.036Z"
+          },
+
+Field: updatedTime
+Schema: PassLocation
+Location: After "createdTime" field
+JSON:
+          "updatedTime": {
+            "type": "string",
+            "description": "The time when the entity was last updated in ISO 8601 format including milliseconds and timezone offset.",
+            "format": "date-time",
+            "example": "2025-05-13T15:07:15.036Z"
+          },
+
+Field: createdBy
+Schema: PassLocation
+Location: After "updatedTime" field
+JSON:
+          "createdBy": {
+            "type": "string",
+            "description": "The user who created the entity."
+          },
+
+Field: updatedBy
+Schema: PassLocation
+Location: After "createdBy" field
+JSON:
+          "updatedBy": {
+            "type": "string",
+            "description": "The user who last updated the entity."
+          },
+
+Field: workspaceId
+Schema: PassLocation
+Location: After "updatedBy" field
+JSON:
+          "workspaceId": {
+            "type": "string",
+            "description": "The ID of the workspace to which this entity belongs."
+          },
+
+Field: altitude
+Schema: PassLocation
+Location: After "longitude" field
+JSON:
+          "altitude": {
+            "type": "number",
+            "description": "Altitude of the location in meters. Optional.",
+            "format": "double",
+            "example": 10.5
+          },
+
+MODIFIED FIELDS (Limited Options):
+==================================
+
+Field: status (PassNotification)
+Original enum options: ["Draft", "Initializing", "Processing", "Finalizing", "Published", "Scheduled", "AppleFailedGoogleSuccess", "AppleSuccessGoogleFailed", "Failed"]
+Current limited options: ["Draft", "Scheduled"]
+Full restoration JSON:
+          "status": {
+            "type": "string",
+            "description": "Notification status: Draft: Notification will not be sent until the status is changed to Scheduled or ProcessingScheduled: Notification is scheduled to be sent at a specific time. Processing: Notification is being sent. Published: Notification has been sent.Failed: Notification failed to be sent. If the status is not specified at the time of creation, it will be sent immediately.",
+            "enum": [
+              "Draft",
+              "Initializing",
+              "Processing",
+              "Finalizing",
+              "Published",
+              "Scheduled",
+              "AppleFailedGoogleSuccess",
+              "AppleSuccessGoogleFailed",
+              "Failed"
+            ]
+          }
+
+RESTORE INSTRUCTIONS:
+====================
+WalletPassInfo Schema Fields:
+1. To restore ALL WalletPassInfo fields: Copy each field JSON block above and insert it at the specified location in the WalletPassInfo schema
+2. To restore SPECIFIC WalletPassInfo fields: Copy only the desired field JSON blocks
+3. The WalletPassInfo schema is located around line 1062 in api-reference/openapi.json
+
+PassMetadata Schema Fields:
+1. To restore PassMetadata fields: Copy the field JSON block and insert it in the PassMetadata schema
+2. The PassMetadata schema is located around line 989 in api-reference/openapi.json
+
+PassNotification Schema Fields:
+1. To restore PassNotification fields: Copy the field JSON block and insert it in the PassNotification schema
+2. To restore limited status field options: Replace the entire status field with the full restoration JSON
+3. The PassNotification schema is located around line 1137 in api-reference/openapi.json
+
+PassLocation Schema Fields:
+1. To restore PassLocation fields: Copy the field JSON block and insert it in the PassLocation schema
+2. The PassLocation schema is located around line 781 in api-reference/openapi.json
+
+General:
+- Make sure to add commas between fields as needed
+- Current visible WalletPassInfo fields: passName, passMetadata, notificationHeader
+- Current visible PassMetadata fields: description, organizationName, backgroundColor, displayTextColor, topField, secondaryFields, backFields, qrUrl, qrText
+- Current visible PassNotification fields: passSerialNumber, notificationName, notificationMessage, status (limited), scheduledTime
+- Current visible PassLocation fields: name, enabled, latitude, longitude, relevantText
+
+CURRENT SCHEMA STATE (Visible fields only):
+===========================================
+      "WalletPassInfo": {
+        "required": [
+          "passMetadata",
+          "passName"
+        ],
+        "type": "object",
+        "properties": {
+          "passName": {
+            "type": "string",
+            "description": "Name of the Pass, the name has to be unique within the workspace.",
+            "example": "My Pass"
+          },
+          "passMetadata": {
+            "$ref": "#/components/schemas/PassMetadata"
+          },
+          "notificationHeader": {
+            "type": "string",
+            "description": "This is used for Apple passes. The notification header is displayed on the lock screen when a notification is sent to the Pass."
+          }
+        }
+      } 
