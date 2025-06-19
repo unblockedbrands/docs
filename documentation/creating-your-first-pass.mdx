@@ -32,17 +32,17 @@ Upload each image and save the upload keys:
 
 ```bash
 # Upload logo
-curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/uploads' \
+curl -X POST 'https://api.ubpass.co/v1/uploads' \
   -H 'api-key: <your-api-key>' \
   -F 'file=@logo.png'
 
 # Upload icon  
-curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/uploads' \
+curl -X POST 'https://api.ubpass.co/v1/uploads' \
   -H 'api-key: <your-api-key>' \
   -F 'file=@icon.png'
 
 # Upload strip
-curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/uploads' \
+curl -X POST 'https://api.ubpass.co/v1/uploads' \
   -H 'api-key: <your-api-key>' \
   -F 'file=@strip.png'
 ```
@@ -52,7 +52,7 @@ curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/uploads' \
 Now create the pass with your branding and content:
 
 ```bash
-curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
+curl -X POST 'https://api.ubpass.co/v1/wallet-pass' \
   -H 'api-key: <your-api-key>' \
   -H 'Content-Type: application/json' \
   -d '{

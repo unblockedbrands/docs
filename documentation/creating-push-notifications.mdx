@@ -16,7 +16,7 @@ Send immediate push notifications to users with wallet passes on their devices
 Send a push notification right away to pass holders:
 
 ```bash
-curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/notifications' \
+curl -X POST 'https://api.ubpass.co/v1/wallet-pass/notifications' \
   -H 'api-key: <your-api-key>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -44,7 +44,7 @@ curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/notificat
 Schedule a notification to be sent at a specific time:
 
 ```bash
-curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/notifications' \
+curl -X POST 'https://api.ubpass.co/v1/wallet-pass/notifications' \
   -H 'api-key: <your-api-key>' \
   -H 'Content-Type: application/json' \
   -d '{

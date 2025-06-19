@@ -17,7 +17,7 @@ Send automatic push notifications when users enter or exit specific geographic a
 Configure a geographic area that will trigger notifications:
 
 ```bash
-curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass-location' \
+curl -X POST 'https://api.ubpass.co/v1/wallet-pass-location' \
   -H 'api-key: <your-api-key>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -49,7 +49,7 @@ curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass-location'
 Enable or disable location-based notifications:
 
 ```bash
-curl -X PUT 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass-location/{locationId}' \
+curl -X PUT 'https://api.ubpass.co/v1/wallet-pass-location/{locationId}' \
   -H 'api-key: <your-api-key>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -72,7 +72,7 @@ curl -X PUT 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass-location/{
 Get all configured locations for a pass:
 
 ```bash
-curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass-location?passSerialNumbers={passId}' \
+curl -X GET 'https://api.ubpass.co/v1/wallet-pass-location?passSerialNumbers={passId}' \
   -H 'api-key: <your-api-key>'
 ```
 
@@ -135,7 +135,7 @@ When users approach your configured locations:
 Delete a location trigger from a pass:
 
 ```bash
-curl -X DELETE 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass-location/{locationId}' \
+curl -X DELETE 'https://api.ubpass.co/v1/wallet-pass-location/{locationId}' \
   -H 'api-key: <your-api-key>'
 ```
 

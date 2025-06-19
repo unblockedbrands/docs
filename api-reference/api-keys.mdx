@@ -58,14 +58,14 @@ You can create an API key by following these steps:
 Include your API key in the `api-key` header:
 
 ```bash
-curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
+curl -X GET 'https://api.ubpass.co/v1/wallet-pass' \
   -H 'api-key: YOUR_API_KEY_HERE'
 ```
 
 ### Example with a Real Request
 
 ```bash
-curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
+curl -X GET 'https://api.ubpass.co/v1/wallet-pass' \
   -H 'api-key: ub_live_abc123xyz456...' \
   -H 'Content-Type: application/json'
 ```
@@ -132,7 +132,7 @@ PASSPORT_API_KEY=ub_live_your_api_key_here
 // app.js
 const API_KEY = process.env.PASSPORT_API_KEY;
 
-const response = await fetch('https://wallet-pass-api-staging.nftco.com/v1/wallet-pass', {
+const response = await fetch('https://api.ubpass.co/v1/wallet-pass', {
   headers: {
     'api-key': API_KEY,
     'Content-Type': 'application/json'
@@ -150,7 +150,7 @@ import requests
 API_KEY = os.getenv('PASSPORT_API_KEY')
 
 response = requests.get(
-    'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass',
+    'https://api.ubpass.co/v1/wallet-pass',
     headers={
         'api-key': API_KEY,
         'Content-Type': 'application/json'

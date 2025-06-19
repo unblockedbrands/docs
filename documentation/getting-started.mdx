@@ -26,7 +26,7 @@ To create a wallet pass, you'll need to follow these steps:
 First, upload the required images for your pass:
 
 ```bash
-curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/uploads' \
+curl -X POST 'https://api.ubpass.co/v1/uploads' \
   -H 'api-key: <your-api-key>' \
   -H 'Content-Type: multipart/form-data' \
   -F 'file=@logo.png'
@@ -49,7 +49,7 @@ You'll need to upload at least three images: logo.png, icon.png, and strip.png. 
 Now create your wallet pass using the upload keys:
 
 ```bash
-curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
+curl -X POST 'https://api.ubpass.co/v1/wallet-pass' \
   -H 'api-key: <your-api-key>' \
   -H 'Content-Type: application/json' \
   -d '{

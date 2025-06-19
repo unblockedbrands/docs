@@ -17,7 +17,7 @@ Create wallet passes that work seamlessly on both Apple Wallet and Google Wallet
 First, upload the required images for your pass:
 
 ```bash
-curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/uploads' \
+curl -X POST 'https://api.ubpass.co/v1/uploads' \
   -H 'api-key: <your-api-key>' \
   -H 'Content-Type: multipart/form-data' \
   -F 'file=@logo.png'
@@ -40,7 +40,7 @@ Upload these required images: logo.png, icon.png, and strip.png. Footer.png is o
 Create a pass that works on both Apple and Google wallets:
 
 ```bash
-curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
+curl -X POST 'https://api.ubpass.co/v1/wallet-pass' \
   -H 'api-key: <your-api-key>' \
   -H 'Content-Type: application/json' \
   -d '{

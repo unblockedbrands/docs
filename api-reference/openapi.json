@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://wallet-Pass-api-staging.nftco.com/v1",
+      "url": "https://api.ubpass.co/v1/",
       "description": "Generated server url"
     }
   ],
@@ -784,7 +784,8 @@
           "latitude",
           "longitude",
           "name",
-          "relevantText"
+          "relevantText",
+          "passSerialNumber"
         ],
         "type": "object",
         "properties": {
@@ -818,6 +819,11 @@
             "type": "string",
             "description": "Text to display on the lock screen when the user is near this location. This field is required and has a maximum length of 255 characters.",
             "example": "You are near Main Store!"
+          },
+          "passSerialNumber": {
+            "type": "string",
+            "description": "The ID of the Pass that this location is associated with. This field is required when creating a location.",
+            "example": "pass-123"
           }
         }
       },

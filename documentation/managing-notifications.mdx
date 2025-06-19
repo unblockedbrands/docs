@@ -18,7 +18,7 @@ Send targeted push notifications to users who have added your wallet passes
 Send a notification to all users who have a specific pass:
 
 ```bash
-curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/notifications' \
+curl -X POST 'https://api.ubpass.co/v1/wallet-pass/notifications' \
   -H 'api-key: <your-api-key>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -44,7 +44,7 @@ curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/notificat
 Schedule a notification to be sent at a specific time:
 
 ```bash
-curl -X POST 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/notifications' \
+curl -X POST 'https://api.ubpass.co/v1/wallet-pass/notifications' \
   -H 'api-key: <your-api-key>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -101,7 +101,7 @@ Notifications can have different statuses:
 Monitor notification performance using the stats endpoint:
 
 ```bash
-curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/notifications/notification-456/stats' \
+curl -X GET 'https://api.ubpass.co/v1/wallet-pass/notifications/notification-456/stats' \
   -H 'api-key: <your-api-key>'
 ```
 

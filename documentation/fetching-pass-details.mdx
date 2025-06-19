@@ -16,7 +16,7 @@ Retrieve information about your wallet passes and search through your pass colle
 Retrieve detailed information about a specific pass:
 
 ```bash
-curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}' \
+curl -X GET 'https://api.ubpass.co/v1/wallet-pass/{passId}' \
   -H 'api-key: <your-api-key>'
 ```
 
@@ -44,7 +44,7 @@ curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass/{passId}' 
 Search and retrieve all your created passes:
 
 ```bash
-curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
+curl -X GET 'https://api.ubpass.co/v1/wallet-pass' \
   -H 'api-key: <your-api-key>'
 ```
 
@@ -75,7 +75,7 @@ curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass' \
 Filter passes by name or partial match:
 
 ```bash
-curl -X GET 'https://wallet-pass-api-staging.nftco.com/v1/wallet-pass?query=loyalty' \
+curl -X GET 'https://api.ubpass.co/v1/wallet-pass?query=loyalty' \
   -H 'api-key: <your-api-key>'
 ```
 
