@@ -1,0 +1,1229 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Unblocked Wallet Passes API",
+    "description": "Unblocked Wallet Passes API"
+  },
+  "servers": [
+    {
+      "url": "https://api.ubpass.co/v1/",
+      "description": "Generated server url"
+    }
+  ],
+  "security": [
+    {
+      "api-key": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Passes",
+      "description": "create, update, retrieve unblocked Passes"
+    },
+    {
+      "name": "Push Notifications",
+      "description": "create, update, get, and delete push notifications"
+    },
+    {
+      "name": "Locations",
+      "description": "create, update, get, and delete Pass locations"
+    }
+  ],
+  "paths": {
+    "/wallet-pass": {
+      "get": {
+        "tags": [
+          "Passes"
+        ],
+        "summary": "Search Pass by ID",
+        "description": " Search for Passes based on various criteria.\n ",
+        "operationId": "getPassList",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "query is used to do text search by Pass name case insensitive",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "Zero based page index",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The size of the page to be returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "includePassAssets",
+            "in": "query",
+            "description": "if passed true, results will include the links of the Pass images",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "summary",
+            "in": "query",
+            "description": "if passed true, only Pass basic info will be returned",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "filter by Pass id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "passName",
+            "in": "query",
+            "description": "query is used to do exact search by Pass name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "filter by status list: Draft, Published",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BXPagedList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallet-pass/{id}": {
+      "get": {
+        "tags": [
+          "Passes"
+        ],
+        "summary": "Get Pass details",
+        "description": "Get Pass details by id.\n",
+        "operationId": "getById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Pass id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Pass is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WalletPassInfo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Passes"
+        ],
+        "summary": "Update Pass details",
+        "description": "Update an existing Pass by id. This will update both Apple and Google Passes.\n",
+        "operationId": "updateWalletPass",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Pass id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Request body for updating a Pass",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WalletPassInfo"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Pass has been updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WalletPassInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pass id is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallet-pass/notifications": {
+      "get": {
+        "tags": [
+          "Push Notifications"
+        ],
+        "summary": "Search for push notifications",
+        "description": "Search for push notifications\n ",
+        "operationId": "getNotificationList",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "text search by notification name case insensitive",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "Zero based page index",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The size of the page to be returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "passSerialNumber",
+            "in": "query",
+            "description": "Pass id",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "status list: Draft, Scheduled, Processing, Published, Failed",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BXPagedList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Push Notifications"
+        ],
+        "summary": "Create a push notification",
+        "description": "Create a push notification. The notification can be sent immediately or scheduled for a later time.\n",
+        "operationId": "createPassNotification",
+        "requestBody": {
+          "description": "Notification request body",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassNotification"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Notification record has been created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassNotification"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallet-pass/notifications/{id}": {
+      "get": {
+        "tags": [
+          "Push Notifications"
+        ],
+        "operationId": "getPassNotification",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "notification Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "notificationStatsCursor",
+            "in": "query",
+            "description": "notification stats page list cursor",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "notificationStatsLimit",
+            "in": "query",
+            "description": "The size of the page to be returned for the notification stats",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "includeStats",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassNotification"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get push notification details"
+      },
+      "patch": {
+        "tags": [
+          "Push Notifications"
+        ],
+        "summary": "Update push notification",
+        "description": "Update push notification. Only Draft or Scheduled notifications can be updated.\n ",
+        "operationId": "updatePassNotification",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Pass id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Update notification request body",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassNotification"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Notification has been created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassNotification"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallet-pass-location/{locationId}": {
+      "get": {
+        "tags": [
+          "Locations"
+        ],
+        "summary": "Get a Pass location",
+        "description": "Get details of a specific Pass location by its ID. These locations trigger push notifications when users are nearby.",
+        "operationId": "getPassLocation",
+        "parameters": [
+          {
+            "name": "locationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassLocation"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pass or location not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Locations"
+        ],
+        "summary": "Update a Pass location",
+        "description": "Update a specific Pass location configuration. These locations trigger push notifications when users are nearby.",
+        "operationId": "updatePassLocation",
+        "parameters": [
+          {
+            "name": "locationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassLocation"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Location has been updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassLocation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pass location not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Locations"
+        ],
+        "summary": "Delete a Pass location",
+        "description": "Delete a specific Pass location from the system. This location will no longer trigger push notifications when users are nearby.",
+        "operationId": "deletePassLocation",
+        "parameters": [
+          {
+            "name": "locationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Location has been deleted successfully"
+          },
+          "404": {
+            "description": "Pass or location not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallet-pass-location": {
+      "get": {
+        "tags": [
+          "Locations"
+        ],
+        "summary": "Search Pass locations",
+        "description": "Search for Pass locations based on various criteria. These locations trigger push notifications when users are nearby.",
+        "operationId": "getPassLocations",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "query is used to do text search by location name case insensitive",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Pass location name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "The cursor to use for pagination",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The size of the page to be returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "passSerialNumbers",
+            "in": "query",
+            "description": "Filter locations by Pass serial numbers",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "The unique identifier of the Pass location",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BXPagedList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Locations"
+        ],
+        "summary": "Create a Pass location",
+        "description": "Create a new Pass location for geolocation-based notifications. This location will trigger push notifications when users are nearby.",
+        "operationId": "createPassLocation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassLocation"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Location has been created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassLocation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pass not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PassLocation": {
+        "required": [
+          "latitude",
+          "longitude",
+          "name",
+          "relevantText",
+          "passSerialNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "description": "Name of the location. This field is required and has a maximum length of 255 characters.",
+            "example": "Main Store"
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "Indicates whether the location is enabled. If true, the Pass may trigger a notification when the user is near this location. Default is true if not specified.",
+            "example": true
+          },
+          "latitude": {
+            "type": "number",
+            "description": "Latitude of the location in degrees. This field is required.",
+            "format": "double",
+            "example": 37.7749
+          },
+          "longitude": {
+            "type": "number",
+            "description": "Longitude of the location in degrees. This field is required.",
+            "format": "double",
+            "example": -122.4194
+          },
+          "relevantText": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "description": "Text to display on the lock screen when the user is near this location. This field is required and has a maximum length of 255 characters.",
+            "example": "You are near Main Store!"
+          },
+          "passSerialNumber": {
+            "type": "string",
+            "description": "The ID of the Pass that this location is associated with. This field is required when creating a location.",
+            "example": "pass-123"
+          }
+        }
+      },
+      "UnblockedApiError": {
+        "type": "object",
+        "properties": {
+          "txId": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "errorMessage": {
+            "type": "string"
+          },
+          "context": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Account": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdTime": {
+            "type": "string",
+            "description": "The time when the entity was created in ISO 8601 format including milliseconds and timezone offset.",
+            "format": "date-time",
+            "example": "2025-05-13T15:07:15.036Z"
+          },
+          "updatedTime": {
+            "type": "string",
+            "description": "The time when the entity was last updated in ISO 8601 format including milliseconds and timezone offset.",
+            "format": "date-time",
+            "example": "2025-05-13T15:07:15.036Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The user who created the entity."
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The user who last updated the entity."
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "The ID of the workspace to which this entity belongs."
+          },
+          "name": {
+            "type": "string",
+            "description": "Account name"
+          },
+          "clientContact": {
+            "type": "string",
+            "description": "Client contact"
+          },
+          "clientContactDetails": {
+            "type": "string",
+            "description": "Client contact details"
+          }
+        },
+        "description": "Account which the Pass belongs to. If it's not provided the system will automatically use the default account for the workspace."
+      },
+      "BackPassField": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BackPassFieldValue"
+            }
+          },
+          "changeMessage": {
+            "type": "string"
+          }
+        },
+        "description": "Back fields."
+      },
+      "BackPassFieldValue": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "link": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "shortLinkValue": {
+            "type": "string"
+          },
+          "shortLinkId": {
+            "type": "string"
+          },
+          "utmSource": {
+            "type": "string"
+          }
+        }
+      },
+      "PassField": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "changeMessage": {
+            "type": "string"
+          }
+        },
+        "description": "Secondary fields."
+      },
+      "PassMetadata": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Pass description. Apple: Displayed on the back of the Pass, providing additional details. Google: Used as the main description of the Pass, visible in the Pass details."
+          },
+          "organizationName": {
+            "type": "string",
+            "description": "Organization name. Apple: Displayed on the lock screen and in the Wallet app, identifying the issuer. Google: Displayed at the top of the Pass, identifying the issuer."
+          },
+          "backgroundColor": {
+            "type": "string",
+            "description": "Background color of the Pass."
+          },
+          "displayTextColor": {
+            "type": "string",
+            "description": "Text color of the Pass."
+          },
+          "topField": {
+            "$ref": "#/components/schemas/PassField"
+          },
+          "secondaryFields": {
+            "type": "array",
+            "description": "Secondary fields.",
+            "items": {
+              "$ref": "#/components/schemas/PassField"
+            }
+          },
+          "backFields": {
+            "type": "array",
+            "description": "Back fields.",
+            "items": {
+              "$ref": "#/components/schemas/BackPassField"
+            }
+          },
+          "qrUrl": {
+            "type": "string",
+            "description": "URL or text for the QR code."
+          },
+          "qrText": {
+            "type": "string",
+            "description": "QR text. It appears below the QR code."
+          }
+        },
+        "description": "Pass metadata."
+      },
+      "UploadInfo": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string",
+            "description": "The name of the Pass image file, this is required when creating a Pass",
+            "example": "logo.png, icon.png, strip.png, footer.png"
+          },
+          "uploadKey": {
+            "type": "string",
+            "description": "The upload key of the image. This required when creating a Pass."
+          },
+          "url": {
+            "type": "string",
+            "description": "The URL of the uploaded image. Will be retrieved in GET operations."
+          }
+        },
+        "description": "Pass images. each Pass has to have a logo, icon, and strip images in png format. footer.png is optional."
+      },
+      "WalletPassInfo": {
+        "required": [
+          "passMetadata",
+          "passName"
+        ],
+        "type": "object",
+        "properties": {
+
+          "passName": {
+            "type": "string",
+            "description": "Name of the Pass, the name has to be unique within the workspace.",
+            "example": "My Pass"
+          },
+          "passMetadata": {
+            "$ref": "#/components/schemas/PassMetadata"
+                      },
+          "notificationHeader": {
+            "type": "string",
+            "description": "This is used for Apple passes. The notification header is displayed on the lock screen when a notification is sent to the Pass."
+          }
+        }
+      },
+      "BXPagedListWorkspaceTopLinkStats": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkspaceTopLinkStats"
+            }
+          },
+          "cursor": {
+            "type": "string"
+          },
+          "hasMore": {
+            "type": "boolean"
+          }
+        }
+      },
+      "NotificationStats": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdTime": {
+            "type": "string",
+            "description": "The time when the entity was created in ISO 8601 format including milliseconds and timezone offset.",
+            "format": "date-time",
+            "example": "2025-05-13T15:07:15.036Z"
+          },
+          "updatedTime": {
+            "type": "string",
+            "description": "The time when the entity was last updated in ISO 8601 format including milliseconds and timezone offset.",
+            "format": "date-time",
+            "example": "2025-05-13T15:07:15.036Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The user who created the entity."
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The user who last updated the entity."
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "The ID of the workspace to which this entity belongs."
+          },
+          "totalNotificationsSent": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalLinksClicks": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "linkStats": {
+            "$ref": "#/components/schemas/BXPagedListWorkspaceTopLinkStats"
+          }
+        }
+      },
+      "PassNotification": {
+        "required": [
+          "notificationName",
+          "passSerialNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "passSerialNumber": {
+            "type": "string",
+            "description": "Pass id to which the notification belongs."
+          },
+          "notificationName": {
+            "type": "string",
+            "description": "Notification name. This is will not appear on Pass, it's used internally to identify the notification."
+          },
+          "notificationMessage": {
+            "type": "string",
+            "description": "Notification message. For Apple passes, this message will be displayed on the lock screen when a notification is sent to the Pass. For Google passes, this message will be displayed at the back of the Pass when a notification is sent to the Pass."
+          },
+          "status": {
+            "type": "string",
+            "description": "Notification status: Draft: Notification will not be sent until the status is changed to Scheduled. Scheduled: Notification is scheduled to be sent at a specific time.",
+            "enum": [
+              "Draft",
+              "Scheduled"
+            ]
+          },
+          "scheduledTime": {
+            "type": "string",
+            "description": "Time when the notification will be sent in ISO 8601 format including milliseconds and timezone offset. Notifications are processed and sent in batches every 15 minutes (at :00, :15, :30, and :45 minutes past each hour). Scheduled times that fall between these intervals will be automatically queued for the next available batch.",
+            "format": "date-time"
+          }
+        }
+      },
+      "WorkspaceTopLinkStats": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdTime": {
+            "type": "string",
+            "description": "The time when the entity was created in ISO 8601 format including milliseconds and timezone offset.",
+            "format": "date-time",
+            "example": "2025-05-13T15:07:15.036Z"
+          },
+          "updatedTime": {
+            "type": "string",
+            "description": "The time when the entity was last updated in ISO 8601 format including milliseconds and timezone offset.",
+            "format": "date-time",
+            "example": "2025-05-13T15:07:15.036Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The user who created the entity."
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The user who last updated the entity."
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "The ID of the workspace to which this entity belongs."
+          },
+          "linkUrl": {
+            "type": "string"
+          },
+          "totalClicks": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ResponseMessage": {
+        "type": "object",
+        "properties": {
+          "msg": {
+            "type": "string"
+          }
+        }
+      },
+      "BXPagedList": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "cursor": {
+            "type": "string"
+          },
+          "hasMore": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SignedURLResponse": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "api-key": {
+        "type": "apiKey",
+        "name": "api-key",
+        "in": "header"
+      }
+    }
+  }
+}
