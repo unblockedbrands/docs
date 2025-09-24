@@ -13,9 +13,6 @@
   ],
   "security": [
     {
-      "AccessToken": []
-    },
-    {
       "APIKey": []
     }
   ],
@@ -1045,7 +1042,7 @@
         "tags": [
           "Passport - Passes"
         ],
-        "summary": "Get Pass",
+        "summary": "Get Pass Details",
         "description": "Get Wallet pass by id.\n",
         "operationId": "getById",
         "parameters": [
@@ -2478,7 +2475,7 @@
         "tags": [
           "Passport - Locations"
         ],
-        "summary": "Create a Pass location",
+        "summary": "Create a Pass Location",
         "description": "Create a new location for a specific wallet pass.\n",
         "operationId": "createPassLocation",
         "parameters": [
@@ -2634,8 +2631,8 @@
         "tags": [
           "Passport - Locations"
         ],
-        "summary": "Get a Pass location",
-        "description": "Get a Pass location by its ID.\n",
+        "summary": "Get a Pass Location",
+        "description": "Get a Pass Location by its ID.\n",
         "operationId": "getPassLocation",
         "parameters": [
           {
@@ -2748,7 +2745,7 @@
         "tags": [
           "Passport - Locations"
         ],
-        "summary": "Update a Pass location",
+        "summary": "Update a Pass Location",
         "description": "Update an existing wallet pass location by ID.\n",
         "operationId": "updatePassLocation",
         "parameters": [
@@ -2913,7 +2910,7 @@
         "tags": [
           "Passport - Locations"
         ],
-        "summary": "Delete a Pass location",
+        "summary": "Delete a Pass Location",
         "description": "Delete a wallet pass location by ID.\n",
         "operationId": "deletePassLocation",
         "parameters": [

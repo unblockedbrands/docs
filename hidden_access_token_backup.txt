@@ -1,0 +1,48 @@
+# AccessToken Authentication Configuration (Hidden)
+# Date: 2025-09-24
+# Reason: Simplified authentication to use API Key only
+
+## What was changed:
+The global security configuration was updated from:
+
+```json
+"security": [
+  {
+    "AccessToken": []
+  },
+  {
+    "APIKey": []
+  }
+],
+```
+
+To:
+
+```json
+"security": [
+  {
+    "APIKey": []
+  }
+],
+```
+
+## AccessToken Security Scheme (Still Present):
+The AccessToken security scheme is still defined in the components/securitySchemes section:
+
+```json
+"AccessToken": {
+  "type": "http",
+  "description": "Bearer token authentication",
+  "scheme": "bearer",
+  "bearerFormat": "JWT"
+}
+```
+
+## How to restore:
+1. Run the restore script: `./restore_access_token.sh`
+2. Or manually add back the AccessToken object to the security array
+
+## Notes:
+- Only the global security setting was changed
+- The AccessToken security scheme definition remains intact
+- This allows easy restoration when needed in the future
