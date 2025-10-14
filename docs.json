@@ -18,11 +18,12 @@
             "group": "Getting Started",
             "pages": [
               "api-reference/introduction",
-              "api-reference/api-keys"
+              "api-reference/api-keys",
+              "api-reference/notes"
             ]
           }
         ]
-        }
+      }
     ]
   },
   "logo": {

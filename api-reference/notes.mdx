@@ -1,0 +1,89 @@
+---
+title: "Notes"
+description: "Important notes and considerations for using the Unblocked Brands API"
+icon: "note-sticky"
+---
+
+## General Notes
+
+This page contains important information and best practices for working with the Unblocked Brands API.
+
+## API Usage
+
+### Rate Limiting
+- API requests are rate limited to ensure fair usage and system stability
+- If you exceed the rate limit, you'll receive a `429 Too Many Requests` response
+- Implement exponential backoff in your retry logic
+
+### Authentication
+- Always include your API key in the `api-key` header
+- Keep your API keys secure and never commit them to version control
+- Rotate your API keys regularly for security
+
+### Workspace ID
+- The `x-workspace-id` header is optional for most endpoints
+- If not provided, the system will use the first workspace assigned to your account
+- Provide this header when working with multiple workspaces
+
+## Pique API
+
+### Campaign Analytics
+- Analytics data may take up to 24 hours to reflect in the API
+- Video performance metrics are updated in real-time
+- Campaign data is aggregated hourly
+
+### Boosted Post
+- Instagram Reels must meet minimum quality requirements
+- Organic boosting typically shows results within 48-72 hours
+- Monitor engagement metrics to optimize future campaigns
+
+### Syndicated Content
+- Content remixing preserves your brand guidelines
+- Micro-influencers are vetted for quality and authenticity
+- Distribution timeline varies by platform (TikTok vs Instagram)
+
+## Passport API
+
+### Pass Creation
+- Always test passes in sandbox mode before going live
+- Apple Wallet and Google Wallet have different asset requirements
+- Passes are immutable once distributed - use updates instead of deletions
+
+### Push Notifications
+- Notifications are delivered in near real-time
+- Draft notifications can be edited before scheduling
+- Scheduled notifications can be cancelled before delivery
+
+### Location-Based Features
+- Geofencing uses 15-minute batch scheduling
+- Location notifications require user permission
+- Test geofence radius for optimal performance (recommended: 100-500 meters)
+
+### Asset Management
+- Upload assets before creating passes
+- Supported formats: PNG, JPG (PNG recommended for transparency)
+- Image size limits apply per platform requirements
+
+## Best Practices
+
+### Error Handling
+- Always check HTTP status codes in responses
+- Parse error messages from the `errorCode` field
+- Use the `txId` field for support requests
+
+### Testing
+- Use test API keys during development
+- Validate all request payloads against the schema
+- Test edge cases (missing fields, invalid data)
+
+### Performance
+- Batch operations when possible to reduce API calls
+- Cache responses where appropriate
+- Use pagination for large result sets
+
+## Support
+
+If you encounter issues or have questions:
+- Check the error response `txId` for troubleshooting
+- Review the API documentation for endpoint-specific details
+- Contact support with specific error messages and request IDs
