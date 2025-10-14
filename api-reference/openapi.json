@@ -1108,66 +1108,6 @@
           }
         }
       },
-      "delete": {
-        "tags": [
-          "Passport - Passes"
-        ],
-        "summary": "Delete Pass",
-        "description": "Delete wallet pass by id.\n",
-        "operationId": "deletePass",
-        "parameters": [
-          {
-            "name": "x-workspace-id",
-            "in": "header",
-            "description": "Workspace ID to perform the operation in. If not provided, system will use the first one assigned to the user",
-            "required": false,
-            "schema": {
-              "pattern": "^[a-zA-Z0-9-_]+$",
-              "type": "string"
-            },
-            "example": "1f089d29-6f9c-66c2-af59-99631cec7ab5"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "wallet pass id",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "404": {
-            "description": "Not Found - Pass ID not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnblockedApiError"
-                },
-                "examples": {
-                  "Not Found Error": {
-                    "summary": "Pass not found",
-                    "description": "Not Found Error",
-                    "value": {
-                      "txId": "1f098fa9-3786-64d4-b4ff-533200846d35",
-                      "timestamp": "24-09-2025 03:57:23",
-                      "errorCode": "NOT_FOUND",
-                      "errorMessage": "Not found.",
-                      "context": {
-                        "id": "1f083424-11ed-617f-9513-1b26dc975ee2"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "204": {
-            "description": "Success"
-          }
-        }
-      },
       "patch": {
         "tags": [
           "Passport - Passes"
