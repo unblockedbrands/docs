@@ -131,6 +131,19 @@
             "example": "1f089d37-5ebe-6778-af59-99631cec7ab5"
           },
           {
+            "name": "ids",
+            "in": "query",
+            "description": "Filter by a list of campaign IDs",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "example": "1f089d37-5ebe-6778-af59-99631cec7ab5,1f089d37-5ebc-6778-af59-99631cec7ab5"
+          },
+          {
             "name": "x-workspace-id",
             "in": "header",
             "description": "Workspace ID to perform the operation in. If not provided, system will use the first one assigned to the user",
@@ -768,6 +781,19 @@
               "pattern": "^[a-zA-Z0-9-_]+$"
             },
             "example": "1f089d37-5ebe-6778-af59-99631cec7ab5"
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "Filter by a list of pass IDs",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "example": "1f089d37-5ebe-6778-af59-99631cec7ab5,1f089d37-5ebc-6778-af59-99631cec7ab5"
           },
           {
             "name": "passName",
@@ -1591,6 +1617,19 @@
               }
             },
             "example": "Published,Scheduled"
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "Filter by notification ID list",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "example": "1f089d37-5ebe-6778-af59-99631cec7ab5,1f089d37-5ebc-6778-af59-99631cec7ab5"
           }
         ],
         "responses": {
@@ -2471,6 +2510,19 @@
               }
             },
             "example": "1f07ee39-d750-6276-aff4-07a599527878,1f07ee39-d750-6276-aff4-07a599527879"
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "Filter by location ID list",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "example": "1f089d37-5ebe-6778-af59-99631cec7ab5,1f089d37-5ebc-6778-af59-99631cec7ab5"
           },
           {
             "name": "id",
