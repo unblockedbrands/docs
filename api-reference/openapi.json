@@ -13,25 +13,28 @@
   ],
   "security": [
     {
+      "AccessToken": []
+    },
+    {
       "APIKey": []
     }
   ],
   "tags": [
     {
       "name": "Pique",
-      "description": "Access Pique campaign analytics and video performance data"
+      "description": "Get Pique Campaigns and their video performance data"
     },
     {
       "name": "Passport - Passes",
-      "description": "Create, update, retrieve, and delete digital wallet passes for Apple and Google platforms"
+      "description": "Create, update, retrieve, and delete wallet passes for Apple and Google platforms"
     },
     {
       "name": "Passport - Push Notifications",
-      "description": "Send and manage push notifications to wallet passes"
+      "description": "Create, update, get, and delete wallet pass notifications"
     },
     {
       "name": "Passport - Locations",
-      "description": "Configure location-based triggers and geofencing for wallet passes"
+      "description": "Create, update, get, and delete wallet pass locations"
     },
     {
       "name": "Upload APIs",
@@ -44,8 +47,8 @@
         "tags": [
           "Pique"
         ],
-        "summary": "Search and filter campaigns",
-        "description": "Search and retrieve Pique Campaigns with optional filtering and pagination.\n\n**Features:**\n- Search campaigns by name using keyword query\n- Filter by campaign status (Prepping, InProgress, Completed, Paused)\n- Filter by campaign type (SocialPush, BrandDiscovery, SocialValidation, ConversionDriver, Enterprise, ViralBoost)\n- Pagination support with cursor-based navigation\n- Returns only published campaigns for branded users\n\n**Pagination:**\n- Use `cursor` parameter for next page navigation\n- `limit` controls page size (default: 20)\n- Response includes `items` array, `cursor`, and `hasMore` fields\n",
+        "summary": "Search and filter Pique Campaigns",
+        "description": "Search and retrieve Pique Campaigns with optional filtering and pagination.\n\n**Features:**\n- Search campaigns by name using keyword query\n- Filter by campaign status (Prepping, InProgress, Completed, Paused, NotStarted, Cancelled)\n- Filter by campaign type (BoostedPost, SyndicatedContent)\n- Pagination support with cursor-based navigation\n- Returns only published campaigns for branded users\n\n**Pagination:**\n- Use `cursor` parameter for next page navigation\n- `limit` controls page size (default: 20)\n- Response includes `items` array, `cursor`, and `hasMore` fields\n",
         "operationId": "searchPiqueCampaign",
         "parameters": [
           {
@@ -319,7 +322,7 @@
         "tags": [
           "Pique"
         ],
-        "summary": "Get campaign by ID",
+        "summary": "Get Pique Campaign by ID",
         "description": "Retrieve a specific Pique Campaign by its unique identifier.\n",
         "operationId": "getPiqueCampaign",
         "parameters": [
@@ -540,7 +543,7 @@
         "tags": [
           "Pique"
         ],
-        "summary": "Get campaign video performance data",
+        "summary": "Get Pique Campaign video performance data",
         "description": "Retrieve video performance metrics for a specific Pique Campaign.\n",
         "operationId": "getPiqueCampaignVideoPerformance",
         "parameters": [
@@ -703,8 +706,8 @@
         "tags": [
           "Passport - Passes"
         ],
-        "summary": "Search and filter Passes",
-        "description": "Search and retrieve Passes with optional filtering and pagination.\n\n**Features:**\n- Search passes by name using keyword query (case-insensitive)\n- Filter by pass status (Draft, Published)\n- Filter by specific pass ID or pass name\n- Pagination support with cursor-based navigation\n- Option to include pass assets (images) in response\n- Option to return summary-only information\n\n**Pagination:**\n- Use `cursor` parameter for next page navigation\n- `limit` controls page size (default: 20, max: 20)\n- Response includes `items` array, `cursor`, and `hasMore` fields\n",
+        "summary": "Search and filter Wallet Passes",
+        "description": "Search and retrieve Wallet Passes with optional filtering and pagination.\n\n**Features:**\n- Search passes by name using keyword query (case-insensitive)\n- Filter by pass status (Draft, Published)\n- Filter by specific pass ID or pass name\n- Pagination support with cursor-based navigation\n- Option to include pass assets (images) in response\n- Option to return summary-only information\n\n**Pagination:**\n- Use `cursor` parameter for next page navigation\n- `limit` controls page size (default: 20, max: 20)\n- Response includes `items` array, `cursor`, and `hasMore` fields\n",
         "operationId": "getPassList",
         "parameters": [
           {
@@ -968,7 +971,7 @@
         "tags": [
           "Passport - Passes"
         ],
-        "summary": "Create a Pass",
+        "summary": "Create a wallet pass",
         "description": "Create a new wallet pass for both Apple and Google platforms.\n",
         "operationId": "createWalletPass",
         "parameters": [
@@ -1200,12 +1203,210 @@
         }
       }
     },
+    "/wallet-pass/async": {
+      "post": {
+        "tags": [
+          "Passport - Passes"
+        ],
+        "summary": "Create a wallet pass asynchronously",
+        "description": "Create a new wallet pass for both Apple and Google platforms asynchronously.\nThis operation will queue the pass creation for background processing.\n",
+        "operationId": "createWalletPassAsync",
+        "parameters": [
+          {
+            "name": "x-workspace-id",
+            "in": "header",
+            "description": "Workspace ID to perform the operation in. If not provided, system will use the first one assigned to the user",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9-_]+$"
+            },
+            "example": "1f089d29-6f9c-66c2-af59-99631cec7ab5"
+          }
+        ],
+        "requestBody": {
+          "description": "Wallet pass creation data including metadata, fields, and uploaded asset references",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WalletPassInfo"
+              },
+              "examples": {
+                "Create Pass Request": {
+                  "summary": "Example wallet pass creation request",
+                  "description": "Create Pass Request",
+                  "value": {
+                    "notificationHeader": "BLUE PASS",
+                    "passName": "VIP MEMBERSHIP PASS",
+                    "passMetadata": {
+                      "description": "Exclusive VIP membership pass with premium benefits",
+                      "organizationName": "Premium Brands Inc",
+                      "backgroundColor": "#4a32A8",
+                      "displayTextColor": "#FFFFFF",
+                      "topField": {
+                        "key": "tabKey",
+                        "label": "SEE OFFERS",
+                        "value": "Tab (...)"
+                      },
+                      "secondaryFields": [
+                        {
+                          "key": "auxiliaryFieldKey",
+                          "label": "Member Level",
+                          "value": "VIP Gold"
+                        },
+                        {
+                          "key": "auxiliaryFieldKey2",
+                          "label": "Expires",
+                          "value": "Dec 31, 2025"
+                        }
+                      ],
+                      "qrUrl": "https://premiumbrands.com/vip-benefits",
+                      "qrText": "Scan for VIP benefits"
+                    },
+                    "uploadInfoList": [
+                      {
+                        "fileName": "icon.png",
+                        "uploadKey": "1f089d37-8a1b-4c2d-9e3f-123456789abc"
+                      },
+                      {
+                        "fileName": "logo.png",
+                        "uploadKey": "1f089d37-8a1b-4c2d-9e3f-123456789def"
+                      },
+                      {
+                        "fileName": "strip.png",
+                        "uploadKey": "1f089d37-8a1b-4c2d-9e3f-123456789ghi"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Wallet pass creation queued successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WalletPassInfo"
+                },
+                "examples": {
+                  "Queued Pass Response": {
+                    "summary": "Successfully queued wallet pass creation",
+                    "description": "Queued Pass Response",
+                    "value": {
+                      "id": "1f089d37-5ebe-6778-af59-99631cec7ab5",
+                      "createdTime": "2025-09-04T21:09:36.027Z",
+                      "updatedTime": "2025-09-04T21:09:36.027Z",
+                      "createdBy": "1ef58ae6-40ac-6fd2-96af-45801844c4e2",
+                      "updatedBy": "1ef58ae6-40ac-6fd2-96af-45801844c4e2",
+                      "workspaceId": "1f089d29-6f9c-66c2-af59-99631cec7ab5",
+                      "accountId": "1f089d29-6fa8-6a13-af59-99631cec7ab5",
+                      "notificationHeader": "BLUE PASS",
+                      "passName": "VIP MEMBERSHIP PASS",
+                      "status": "Draft",
+                      "passMetadata": {
+                        "description": "Exclusive VIP membership pass with premium benefits",
+                        "organizationName": "Premium Brands Inc",
+                        "backgroundColor": "#4a32A8",
+                        "displayTextColor": "#FFFFFF",
+                        "topField": {
+                          "key": "tabKey",
+                          "label": "SEE OFFERS",
+                          "value": "Tab (...)"
+                        },
+                        "secondaryFields": [
+                          {
+                            "key": "auxiliaryFieldKey",
+                            "label": "Member Level",
+                            "value": "VIP Gold"
+                          },
+                          {
+                            "key": "auxiliaryFieldKey2",
+                            "label": "Expires",
+                            "value": "Dec 31, 2025"
+                          }
+                        ],
+                        "qrUrl": "https://premiumbrands.com/vip-benefits",
+                        "qrText": "Scan for VIP benefits"
+                      },
+                      "uploadInfoList": [
+                        {
+                          "fileName": "icon.png",
+                          "uploadKey": "1f089d37-8a1b-4c2d-9e3f-123456789abc"
+                        },
+                        {
+                          "fileName": "logo.png",
+                          "uploadKey": "1f089d37-8a1b-4c2d-9e3f-123456789def"
+                        },
+                        {
+                          "fileName": "strip.png",
+                          "uploadKey": "1f089d37-8a1b-4c2d-9e3f-123456789ghi"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                },
+                "examples": {
+                  "Bad Request Error": {
+                    "summary": "Invalid input validation error",
+                    "description": "Bad Request Error",
+                    "value": {
+                      "txId": "1f098faa-8f33-6425-b4ff-533200846d35",
+                      "timestamp": "24-09-2025 03:57:59",
+                      "errorCode": "INVALID_INPUT",
+                      "context": {
+                        "passName": "must not be null"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                },
+                "examples": {
+                  "Unauthorized Error": {
+                    "summary": "Authentication failed",
+                    "description": "Unauthorized Error",
+                    "value": {
+                      "txId": "Root-1-68d3693c-26a3db2278c7668f5e086711",
+                      "timestamp": "24-09-2025 03:45:00",
+                      "errorCode": "UNAUTHORIZED",
+                      "errorMessage": "UNAUTHORIZED."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/wallet-pass/{id}": {
       "get": {
         "tags": [
           "Passport - Passes"
         ],
-        "summary": "Get Pass Details",
+        "summary": "Get wallet pass",
         "description": "Get Wallet pass by id.\n",
         "operationId": "getById",
         "parameters": [
@@ -1275,7 +1476,7 @@
         "tags": [
           "Passport - Passes"
         ],
-        "summary": "Update Pass",
+        "summary": "Update Wallet Pass",
         "description": "Update an existing wallet pass by ID. This will update both Apple and Google wallet passes.\n",
         "operationId": "updateWalletPass",
         "parameters": [
@@ -1529,6 +1730,300 @@
             }
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Passport - Passes"
+        ],
+        "summary": "Delete wallet pass",
+        "description": "Delete wallet pass by id.\n",
+        "operationId": "deletePass",
+        "parameters": [
+          {
+            "name": "x-workspace-id",
+            "in": "header",
+            "description": "Workspace ID to perform the operation in. If not provided, system will use the first one assigned to the user",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9-_]+$"
+            },
+            "example": "1f089d29-6f9c-66c2-af59-99631cec7ab5"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "wallet pass id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found - Pass ID not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                },
+                "examples": {
+                  "Not Found Error": {
+                    "summary": "Pass not found",
+                    "description": "Not Found Error",
+                    "value": {
+                      "txId": "1f098fa9-3786-64d4-b4ff-533200846d35",
+                      "timestamp": "24-09-2025 03:57:23",
+                      "errorCode": "NOT_FOUND",
+                      "errorMessage": "Not found.",
+                      "context": {
+                        "id": "1f083424-11ed-617f-9513-1b26dc975ee2"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallet-pass/async/{id}": {
+      "patch": {
+        "tags": [
+          "Passport - Passes"
+        ],
+        "summary": "Update Wallet Pass asynchronously",
+        "description": "Update an existing wallet pass by ID asynchronously. This will queue the update for both Apple and Google wallet passes for background processing.\n",
+        "operationId": "updateWalletPassAsync",
+        "parameters": [
+          {
+            "name": "x-workspace-id",
+            "in": "header",
+            "description": "Workspace ID to perform the operation in. If not provided, system will use the first one assigned to the user",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9-_]+$"
+            },
+            "example": "1f089d29-6f9c-66c2-af59-99631cec7ab5"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier of the wallet pass to update",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9-_]+$"
+            },
+            "example": "1f089d37-5ebe-6778-af59-99631cec7ab5"
+          }
+        ],
+        "requestBody": {
+          "description": "Updated wallet pass data including metadata, fields, and asset references",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WalletPassInfo"
+              },
+              "examples": {
+                "Update Pass Request": {
+                  "summary": "Example wallet pass update request",
+                  "description": "Update Pass Request",
+                  "value": {
+                    "notificationHeader": "BLUE PASS",
+                    "passName": "VIP MEMBERSHIP PASS - UPDATED",
+                    "passMetadata": {
+                      "description": "Updated VIP membership pass with enhanced benefits",
+                      "organizationName": "Premium Brands Inc",
+                      "backgroundColor": "#4a32A8",
+                      "displayTextColor": "#FFFFFF",
+                      "topField": {
+                        "key": "tabKey",
+                        "label": "SEE OFFERS",
+                        "value": "Tab (...)"
+                      },
+                      "secondaryFields": [
+                        {
+                          "key": "auxiliaryFieldKey",
+                          "label": "Member Level",
+                          "value": "VIP Platinum"
+                        },
+                        {
+                          "key": "auxiliaryFieldKey2",
+                          "label": "Expires",
+                          "value": "Dec 31, 2026"
+                        }
+                      ],
+                      "qrUrl": "https://premiumbrands.com/vip-benefits",
+                      "qrText": "Scan for VIP benefits"
+                    },
+                    "uploadInfoList": [
+                      {
+                        "fileName": "icon.png",
+                        "uploadKey": "1f089d37-8a1b-4c2d-9e3f-123456789abc"
+                      },
+                      {
+                        "fileName": "logo.png",
+                        "uploadKey": "1f089d37-8a1b-4c2d-9e3f-123456789def"
+                      },
+                      {
+                        "fileName": "strip.png",
+                        "uploadKey": "1f089d37-8a1b-4c2d-9e3f-123456789ghi"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Wallet pass update queued successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WalletPassInfo"
+                },
+                "examples": {
+                  "Queued Update Response": {
+                    "summary": "Successfully queued wallet pass update",
+                    "description": "Queued Update Response",
+                    "value": {
+                      "id": "1f089d37-5ebe-6778-af59-99631cec7ab5",
+                      "createdTime": "2025-09-04T21:09:36.027Z",
+                      "updatedTime": "2025-09-04T21:15:42.123Z",
+                      "createdBy": "1ef58ae6-40ac-6fd2-96af-45801844c4e2",
+                      "updatedBy": "1ef58ae6-40ac-6fd2-96af-45801844c4e2",
+                      "workspaceId": "1f089d29-6f9c-66c2-af59-99631cec7ab5",
+                      "accountId": "1f089d29-6fa8-6a13-af59-99631cec7ab5",
+                      "notificationHeader": "BLUE PASS",
+                      "passName": "VIP MEMBERSHIP PASS - UPDATED",
+                      "status": "Draft",
+                      "passMetadata": {
+                        "description": "Updated VIP membership pass with enhanced benefits",
+                        "organizationName": "Premium Brands Inc",
+                        "backgroundColor": "#4a32A8",
+                        "displayTextColor": "#FFFFFF",
+                        "topField": {
+                          "key": "tabKey",
+                          "label": "SEE OFFERS",
+                          "value": "Tab (...)"
+                        },
+                        "secondaryFields": [
+                          {
+                            "key": "auxiliaryFieldKey",
+                            "label": "Member Level",
+                            "value": "VIP Platinum"
+                          },
+                          {
+                            "key": "auxiliaryFieldKey2",
+                            "label": "Expires",
+                            "value": "Dec 31, 2026"
+                          }
+                        ],
+                        "qrUrl": "https://premiumbrands.com/vip-benefits",
+                        "qrText": "Scan for VIP benefits"
+                      },
+                      "uploadInfoList": [
+                        {
+                          "fileName": "icon.png",
+                          "uploadKey": "1f089d37-8a1b-4c2d-9e3f-123456789abc"
+                        },
+                        {
+                          "fileName": "logo.png",
+                          "uploadKey": "1f089d37-8a1b-4c2d-9e3f-123456789def"
+                        },
+                        {
+                          "fileName": "strip.png",
+                          "uploadKey": "1f089d37-8a1b-4c2d-9e3f-123456789ghi"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                },
+                "examples": {
+                  "Bad Request Error": {
+                    "summary": "Invalid input validation error",
+                    "description": "Bad Request Error",
+                    "value": {
+                      "txId": "1f098faa-8f33-6425-b4ff-533200846d35",
+                      "timestamp": "24-09-2025 03:57:59",
+                      "errorCode": "INVALID_INPUT",
+                      "context": {
+                        "passName": "must not be null"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Pass ID not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                },
+                "examples": {
+                  "Not Found Error": {
+                    "summary": "Pass not found",
+                    "description": "Not Found Error",
+                    "value": {
+                      "txId": "1f098fa9-3786-64d4-b4ff-533200846d35",
+                      "timestamp": "24-09-2025 03:57:23",
+                      "errorCode": "NOT_FOUND",
+                      "errorMessage": "Not found.",
+                      "context": {
+                        "id": "1f083424-11ed-617f-9513-1b26dc975ee2"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnblockedApiError"
+                },
+                "examples": {
+                  "Unauthorized Error": {
+                    "summary": "Authentication failed",
+                    "description": "Unauthorized Error",
+                    "value": {
+                      "txId": "Root-1-68d3693c-26a3db2278c7668f5e086711",
+                      "timestamp": "24-09-2025 03:45:00",
+                      "errorCode": "UNAUTHORIZED",
+                      "errorMessage": "UNAUTHORIZED."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/wallet-pass/notifications": {
@@ -1536,7 +2031,7 @@
         "tags": [
           "Passport - Push Notifications"
         ],
-        "summary": "Search and filter Pass notifications",
+        "summary": "Search and filter wallet pass notifications",
         "description": "Search and retrieve wallet pass notifications with optional filtering and pagination.\n\n**Features:**\n- Search notifications by name using keyword query (case-insensitive)\n- Filter by notification status (Draft, Scheduled, Processing, Published, Failed)\n- Filter by specific wallet pass serial numbers\n- Pagination support with cursor-based navigation\n- Option to include pass template data in response\n- Option to include link click statistics\n\n**Pagination:**\n- Use `cursor` parameter for next page navigation\n- `limit` controls page size (default: 20, max: 20)\n- Response includes `items` array, `cursor`, and `hasMore` fields\n\n**Status Values:**\n- `Draft`: Notification created but not yet ready for delivery\n- `Scheduled`: Notification scheduled for future delivery (processed every 15 minutes)\n- `Processing`: Notification currently being sent or sent immediately upon creation\n- `Published`: Notification successfully delivered to all recipients\n- `Failed`: Notification delivery failed due to errors\n",
         "operationId": "getNotificationList",
         "parameters": [
@@ -1737,7 +2232,7 @@
         "tags": [
           "Passport - Push Notifications"
         ],
-        "summary": "Create a notification for a Pass",
+        "summary": "Create a notification for a wallet pass",
         "description": "Create a notification for a wallet pass. The notification can be sent immediately or scheduled for a later time.\n\n**Notification Status Options:**\n- `Draft`: Notification created but not yet ready for delivery\n- `Processing`: Notification will be sent immediately upon creation\n- `Scheduled`: Notification will be sent at the specified scheduled time\n\n**Scheduling:**\n- For immediate delivery, use `Processing` status\n- For scheduled delivery, use `Scheduled` status with a `scheduledTime`\n- Scheduled notifications are processed every 15 minutes, so delivery may occur within 15 minutes of the scheduled time\n",
         "operationId": "createPassNotification",
         "parameters": [
@@ -1863,7 +2358,7 @@
         "tags": [
           "Passport - Push Notifications"
         ],
-        "summary": "Get Pass notification by ID",
+        "summary": "Get wallet pass notification by ID",
         "description": "Retrieve a specific wallet pass notification by its unique identifier.\nOptionally include notification statistics and click tracking data.\n",
         "operationId": "getPassNotification",
         "parameters": [
@@ -2008,7 +2503,7 @@
         "tags": [
           "Passport - Push Notifications"
         ],
-        "summary": "Delete Pass notification",
+        "summary": "Delete wallet pass notification",
         "description": "Delete wallet pass notification by ID. Only Draft or Scheduled notifications can be deleted.\n\n**Deletion Rules:**\n- `Draft` notifications can always be deleted\n- `Scheduled` notifications can be deleted before they are processed\n- `Processing`, `Published`, or `Failed` notifications cannot be deleted\n",
         "operationId": "deletePassNotification",
         "parameters": [
@@ -2118,7 +2613,7 @@
         "tags": [
           "Passport - Push Notifications"
         ],
-        "summary": "Update Pass notification",
+        "summary": "Update wallet pass notification",
         "description": "Update wallet pass notification. Only Draft or Scheduled notifications can be updated.\n\n**Status Changes:**\n- Change from `Draft` to `Processing` for immediate delivery\n- Change from `Draft` to `Scheduled` for future delivery\n- Update `Scheduled` notifications to change delivery time or content\n\n**Scheduling Notes:**\n- Scheduled notifications are processed every 15 minutes\n- Delivery may occur within 15 minutes of the scheduled time\n- Once a notification is `Processing` or `Published`, it cannot be updated\n",
         "operationId": "updatePassNotification",
         "parameters": [
@@ -2438,7 +2933,7 @@
         "tags": [
           "Passport - Locations"
         ],
-        "summary": "Search and filter Pass Locations",
+        "summary": "Search and filter Wallet Pass Locations",
         "description": "Search and retrieve Wallet Pass Locations with optional filtering and pagination.\n\n**Features:**\n- Search locations by name using keyword query (case-insensitive)\n- Filter by specific location ID or name\n- Filter by wallet pass serial numbers\n- Pagination support with cursor-based navigation\n\n**Pagination:**\n- Use `cursor` parameter for next page navigation\n- `limit` controls page size (default: 20, max: 20)\n- Response includes `items` array, `cursor`, and `hasMore` fields\n",
         "operationId": "getPassLocations",
         "parameters": [
@@ -2530,8 +3025,7 @@
             "description": "Filter by specific location ID",
             "required": false,
             "schema": {
-              "type": "string",
-              "pattern": "^[a-zA-Z0-9-_]+$"
+              "type": "string"
             },
             "example": "1f089d37-5ebe-6778-af59-99631cec7ab5"
           }
@@ -2604,7 +3098,7 @@
         "tags": [
           "Passport - Locations"
         ],
-        "summary": "Create a Pass Location",
+        "summary": "Create a wallet pass location",
         "description": "Create a new location for a specific wallet pass.\n",
         "operationId": "createPassLocation",
         "parameters": [
@@ -2760,8 +3254,8 @@
         "tags": [
           "Passport - Locations"
         ],
-        "summary": "Get a Pass Location",
-        "description": "Get a Pass Location by its ID.\n",
+        "summary": "Get a wallet pass location",
+        "description": "Get a wallet pass location by its ID.\n",
         "operationId": "getPassLocation",
         "parameters": [
           {
@@ -2874,7 +3368,7 @@
         "tags": [
           "Passport - Locations"
         ],
-        "summary": "Update a Pass Location",
+        "summary": "Update a wallet pass location",
         "description": "Update an existing wallet pass location by ID.\n",
         "operationId": "updatePassLocation",
         "parameters": [
@@ -3039,7 +3533,7 @@
         "tags": [
           "Passport - Locations"
         ],
-        "summary": "Delete a Pass Location",
+        "summary": "Delete a wallet pass location",
         "description": "Delete a wallet pass location by ID.\n",
         "operationId": "deletePassLocation",
         "parameters": [
@@ -3954,29 +4448,42 @@
           }
         }
       },
-      "BXPagedList": {
+      "PiqueCampaignUserFlowRequest": {
         "type": "object",
         "properties": {
-          "items": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "BoostedPost",
+              "SyndicatedContent"
+            ]
+          },
+          "targetViews": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "platforms": {
             "type": "array",
-            "items": {}
+            "items": {
+              "type": "string"
+            }
           },
-          "cursor": {
+          "deliveredViews": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "contentLink": {
             "type": "string"
           },
-          "hasMore": {
-            "type": "boolean"
-          }
-        }
-      },
-      "SignedURLResponse": {
-        "type": "object",
-        "properties": {
-          "key": {
+          "submissionNotes": {
             "type": "string"
           },
-          "url": {
-            "type": "string"
+          "endDate": {
+            "type": "string",
+            "format": "date"
           }
         }
       },
@@ -4200,42 +4707,29 @@
           }
         }
       },
-      "PiqueCampaignUserFlowRequest": {
+      "BXPagedList": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "BoostedPost",
-              "SyndicatedContent"
-            ]
-          },
-          "targetViews": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "platforms": {
+          "items": {
             "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "items": {}
           },
-          "deliveredViews": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "contentLink": {
+          "cursor": {
             "type": "string"
           },
-          "submissionNotes": {
+          "hasMore": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SignedURLResponse": {
+        "type": "object",
+        "properties": {
+          "key": {
             "type": "string"
           },
-          "endDate": {
-            "type": "string",
-            "format": "date"
+          "url": {
+            "type": "string"
           }
         }
       }
@@ -4246,6 +4740,12 @@
         "description": "API Key authentication",
         "name": "api-key",
         "in": "header"
+      },
+      "AccessToken": {
+        "type": "http",
+        "description": "Bearer token authentication",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
