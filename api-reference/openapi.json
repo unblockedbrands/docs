@@ -99,7 +99,7 @@
                   "Completed",
                   "Paused",
                   "NotStarted",
-                  "Cancelled"
+                  "Canceled"
                 ]
               }
             },
@@ -622,7 +622,13 @@
                           "shares": 800,
                           "comments": 450,
                           "saves": 2100,
-                          "datePosted": "2024-01-15"
+                          "datePosted": "2024-01-15",
+                          "deliveredViews": 45000,
+                          "startViews": 90000,
+                          "startLikes": 7800,
+                          "startComments": 292,
+                          "startShares": 480,
+                          "startSaves": 1470
                         },
                         {
                           "id": "1f089d37-6145-6709-af59-99631cec7ab6",
@@ -640,7 +646,13 @@
                           "shares": 320,
                           "comments": 180,
                           "saves": 1200,
-                          "datePosted": "2024-01-16"
+                          "datePosted": "2024-01-16",
+                          "deliveredViews": 25500,
+                          "startViews": 51000,
+                          "startLikes": 4225,
+                          "startComments": 117,
+                          "startShares": 192,
+                          "startSaves": 840
                         }
                       ],
                       "cursor": "1f089d37-6145-6709-af59-99631cec7ab6",
@@ -4244,7 +4256,7 @@
               "Completed",
               "Paused",
               "NotStarted",
-              "Cancelled"
+              "Canceled"
             ]
           },
           "startDate": {
